@@ -49,6 +49,7 @@ public class OfferController {
         this.offerRepository = offerRepository;
         this.contactRepository = contactRepository;
         this.clock = clock;
+        
     }
 
     @PostMapping("")
