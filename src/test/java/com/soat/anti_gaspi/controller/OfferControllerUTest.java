@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.*;
@@ -60,7 +59,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_availability_date_is_in_the_past() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("SOAT",
+            OfferDto offerDto = new OfferDto("SOAT",
                     "3 vieux ordinateurs",
                     "3 ordinateurs sous Windows 10 en bon état",
                     "revendeur@donner.fr",
@@ -69,7 +68,7 @@ class OfferControllerUTest {
                     "2022-09-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
@@ -78,7 +77,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_expiration_date_is_in_the_past() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("SOAT",
+            OfferDto offerDto = new OfferDto("SOAT",
                     "3 vieux ordinateurs",
                     "3 ordinateurs sous Windows 10 en bon état",
                     "revendeur@donner.fr",
@@ -87,7 +86,7 @@ class OfferControllerUTest {
                     "2022-06-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
@@ -96,7 +95,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_invalid_email() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("SOAT",
+            OfferDto offerDto = new OfferDto("SOAT",
                     "3 vieux ordinateurs",
                     "3 ordinateurs sous Windows 10 en bon état",
                     "revendeur@invalid-email",
@@ -105,7 +104,7 @@ class OfferControllerUTest {
                     "2022-08-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
@@ -115,7 +114,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_empty_Company_name() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("",
+            OfferDto offerDto = new OfferDto("",
                     "3 vieux ordinateurs",
                     "3 ordinateurs sous Windows 10 en bon état",
                     "revendeur@soat.fr",
@@ -124,7 +123,7 @@ class OfferControllerUTest {
                     "2022-08-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
@@ -133,7 +132,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_empty_title() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("SOAT",
+            OfferDto offerDto = new OfferDto("SOAT",
                     "",
                     "3 ordinateurs sous Windows 10 en bon état",
                     "revendeur@soat.fr",
@@ -142,7 +141,7 @@ class OfferControllerUTest {
                     "2022-08-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
@@ -151,7 +150,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_empty_description() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("SOAT",
+            OfferDto offerDto = new OfferDto("SOAT",
                     "3 vieux ordinateurs",
                     "",
                     "revendeur@soat.fr",
@@ -160,7 +159,7 @@ class OfferControllerUTest {
                     "2022-08-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
@@ -169,7 +168,7 @@ class OfferControllerUTest {
         @Test
         void should_return_bad_request_when_empty_address() throws NotificationException {
             // given
-            OfferToSave offerToSave = new OfferToSave("SOAT",
+            OfferDto offerDto = new OfferDto("SOAT",
                     "3 vieux ordinateurs",
                     "3 ordinateurs sous Windows 10 en bon état",
                     "revendeur@soat.fr",
@@ -178,7 +177,7 @@ class OfferControllerUTest {
                     "2022-08-30");
 
             // when
-            ResponseEntity<UUID> result = offerController.create(offerToSave);
+            ResponseEntity<UUID> result = offerController.create(offerDto);
 
             // then
             assertThat(result.getStatusCode()).isEqualTo(BAD_REQUEST);
