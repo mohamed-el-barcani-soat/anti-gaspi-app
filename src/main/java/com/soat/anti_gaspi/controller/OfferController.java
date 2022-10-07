@@ -1,6 +1,5 @@
 package com.soat.anti_gaspi.controller;
 
-import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +13,6 @@ import java.util.regex.Pattern;
 
 
 import com.soat.anti_gaspi.model.Contact;
-import com.soat.anti_gaspi.model.NotificationException;
 import com.soat.anti_gaspi.model.Offer;
 import com.soat.anti_gaspi.model.Status;
 import com.soat.anti_gaspi.repository.ContactRepository;
@@ -53,15 +51,15 @@ public class OfferController {
     }
 
     @PostMapping("")
-    public ResponseEntity<UUID> create(@RequestBody OfferToSave offerToSave) {
+    public ResponseEntity<UUID> create(@RequestBody OfferDto offerDto) {
         Offer offer = new Offer(
-                offerToSave.companyName(),
-                offerToSave.title(),
-                offerToSave.description(),
-                offerToSave.email(),
-                offerToSave.address(),
-                LocalDate.parse(offerToSave.availabilityDate(), dateFormatter),
-                LocalDate.parse(offerToSave.expirationDate(), dateFormatter));
+                offerDto.companyName(),
+                offerDto.title(),
+                offerDto.description(),
+                offerDto.email(),
+                offerDto.address(),
+                LocalDate.parse(offerDto.availabilityDate(), dateFormatter),
+                LocalDate.parse(offerDto.expirationDate(), dateFormatter));
         if (!fieldValidator.test(offer.getCompanyName(), "CompanyName") ||
                 !fieldValidator.test(offer.getTitle(), "Title") ||
                 !fieldValidator.test(offer.getDescription(), "Description") ||
@@ -72,11 +70,17 @@ public class OfferController {
                 offer.getAvailabilityDate().isAfter(offer.getExpirationDate())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
         offer.setId(UUID.randomUUID());
+
         var saved = offerRepository.save(offer);
 
-        String emailBody = String.format("%s %s %s %s %s", offer.getDescription(), offer.getAddress(), offer.getCompanyName(), offer.getAvailabilityDate(), offer.getExpirationDate());
-            smailService.sendEmail(offer.getTitle(), offer.getEmail(), emailBody);
+
+
+//        String emailBody = String.format("%s %s %s %s %s", offer.getDescription(), offer.getAddress(), offer.getCompanyName(), offer.getAvailabilityDate(), offer.getExpirationDate());
+  //          smailService.sendEmail(offer.getTitle(), offer.getEmail(), emailBody);
+
+
                     return new ResponseEntity<>(saved.getId(), HttpStatus.CREATED);
     }
 
