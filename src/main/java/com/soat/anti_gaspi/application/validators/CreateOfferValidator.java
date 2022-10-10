@@ -1,8 +1,12 @@
 package com.soat.anti_gaspi.application.validators;
 
+import com.soat.anti_gaspi.application.exceptions.InvalidDateFormat;
 import com.soat.anti_gaspi.application.exceptions.InvalidFormatException;
+import com.soat.anti_gaspi.application.structures.mappers.Validator;
 import com.soat.anti_gaspi.controller.OfferDto;
-import com.soat.anti_gaspi.domain.Validator;
+
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeParseException;
 
 public class CreateOfferValidator implements Validator<OfferDto> {
 
@@ -10,14 +14,18 @@ public class CreateOfferValidator implements Validator<OfferDto> {
 
     @Override
     public void validate(OfferDto offerDto) {
-        checkMail(offerDto.getEmail());
-        checkPrecedenceDate(offerDto.getExpirationDate(), offerDto.getAvailabilityDate());
+        checkMail(offerDto.getUser().getEmail());
+        checkDatesFormat(offerDto.getExpirationDate(), offerDto.getAvailabilityDate());
     }
 
-    private void checkPrecedenceDate(String expirationDate, String availabilityDate) {
-
+    private void checkDatesFormat(String expirationDate, String availabilityDate) {
+        try {
+            OffsetDateTime.parse(expirationDate);
+            OffsetDateTime.parse(availabilityDate);
+        } catch (DateTimeParseException exception) {
+            throw new InvalidDateFormat(exception.getParsedString(), OffsetDateTime.class.getTypeName());
+        }
     }
-
 
     private void checkMail(String mail) {
         if (!mail.matches(EMAIL_REGEX)) throw new InvalidFormatException(mail, "mail");
