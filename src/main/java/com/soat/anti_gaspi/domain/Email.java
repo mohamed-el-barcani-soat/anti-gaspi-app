@@ -11,17 +11,17 @@ class Email {
         return value;
     }
 
-    public static CreateEmailBuilder create() {
-        return new CreateEmailBuilder();
+    public static EmailBuilder builder() {
+        return new EmailBuilder();
     }
 
-    private static class CreateEmailBuilder {
+    private static class EmailBuilder {
         private String value;
 
-        private CreateEmailBuilder() {
+        private EmailBuilder() {
         }
 
-        public CreateEmailBuilder value(final String value) {
+        public EmailBuilder value(final String value) {
             this.value = value;
             return this;
         }
