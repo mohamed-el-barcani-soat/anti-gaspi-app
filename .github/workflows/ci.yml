@@ -5,9 +5,7 @@ name: CI
 
 on:
   push:
-    branches: [feature/ci]
-  pull_request:
-    branches: [feature/ci]
+    branches: [main]
 
 env: 
   AZURE_WEBAPP_NAME: 'app-soat-bc22-java1-dev-fr'
