@@ -2,8 +2,6 @@ package com.soat.anti_gaspi.domain;
 
 import java.time.OffsetDateTime;
 
-import static com.soat.anti_gaspi.domain.Status.PENDING;
-
 
 public class Offer {
     private final OfferId offerId;
@@ -84,11 +82,6 @@ public class Offer {
             return this;
         }
 
-        public OfferBuilder companyName(Company company) {
-            this.company = company;
-            return this;
-        }
-
 
         public OfferBuilder status(Status status) {
             this.status = status;
@@ -105,7 +98,7 @@ public class Offer {
             return this;
         }
 
-        public OfferBuilder email(User user) {
+        public OfferBuilder user(User user) {
             this.user = user;
             return this;
         }

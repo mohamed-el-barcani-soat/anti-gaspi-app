@@ -5,20 +5,24 @@ import java.time.OffsetDateTime;
 public class OfferAggregate {
 
     public static Offer create(
-            String companyName, String title, String description,
-            String email, String street, int streetNumber, String country, String zipcode, String city,
-            OffsetDateTime availabilityDate, OffsetDateTime expirationDate) {
-
-
-        /*var company = CompanyName.create().value(companyName).build();
-        var user = User.create().email(email).build();
-        var address = Address.create().city(city).number(streetNumber).street(street).zipcode(zipcode).country(country).build(); */
-
-        var offerId = availabilityDate.toString().concat(email).concat(title);
-
+            User user, String title, String description, Address address, OffsetDateTime availabilityDate, OffsetDateTime expirationDate
+    ) {
 
         return Offer.builder()
+                .id(createId(availabilityDate, user.getEmail(), title))
+                .user(user)
+                .title(title)
+                .description(description)
+                .address(address)
+                .availabilityDate(availabilityDate)
+                .expirationDate(expirationDate)
                 .build();
 
+    }
+
+    private static OfferId createId(OffsetDateTime availabilityDate, Email email, String title) {
+        var offerId = availabilityDate.toString().concat(email.getValue()).concat(title);
+
+        return new OfferId(offerId);
     }
 }
