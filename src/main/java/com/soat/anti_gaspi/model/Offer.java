@@ -1,5 +1,7 @@
 package com.soat.anti_gaspi.model;
 
+import org.hibernate.annotations.Type;
+
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 @Entity
 public class Offer {
     @Id
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
     @Column
     private String companyName;
