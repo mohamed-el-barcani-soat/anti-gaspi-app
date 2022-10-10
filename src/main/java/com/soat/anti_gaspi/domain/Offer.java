@@ -1,8 +1,8 @@
-package com.soat.anti_gaspi.domain.offer;
+package com.soat.anti_gaspi.domain;
 
 import java.time.OffsetDateTime;
 
-import static com.soat.anti_gaspi.domain.offer.Status.PENDING;
+import static com.soat.anti_gaspi.domain.Status.PENDING;
 
 
 public class Offer {

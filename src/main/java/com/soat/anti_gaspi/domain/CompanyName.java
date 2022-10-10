@@ -1,4 +1,4 @@
-package com.soat.anti_gaspi.domain.offer;
+package com.soat.anti_gaspi.domain;
 
 class CompanyName {
 
