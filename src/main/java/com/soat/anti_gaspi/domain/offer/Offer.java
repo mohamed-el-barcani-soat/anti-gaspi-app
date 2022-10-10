@@ -1,6 +1,5 @@
 package com.soat.anti_gaspi.domain.offer;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 import static com.soat.anti_gaspi.domain.offer.Status.PENDING;
