@@ -11,9 +11,9 @@ spring:
     name: anti-gaspi
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/antigaspi
-    username: user
-    password: password
+    url: ${CUSTOMCONNSTR_BDD_URL}
+    username: ${CUSTOMCONNSTR_BDD_USER}
+    password: ${CUSTOMCONNSTR_BDD_PASSWORD}
   flyway:
     enabled: true
     validate-on-migrate: true
