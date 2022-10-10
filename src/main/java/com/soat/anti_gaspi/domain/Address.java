@@ -59,24 +59,4 @@ public class Address {
         }
     }
 
-    public NumberIndicator getNumberIndicator() {
-        return numberIndicator;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
 }

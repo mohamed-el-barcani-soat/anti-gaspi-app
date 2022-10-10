@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.domain;
 
-class Email {
+public class Email {
     private final String value;
 
     private Email(final String email) {
@@ -15,7 +15,7 @@ class Email {
         return new EmailBuilder();
     }
 
-    private static class EmailBuilder {
+    public static class EmailBuilder {
         private String value;
 
         private EmailBuilder() {

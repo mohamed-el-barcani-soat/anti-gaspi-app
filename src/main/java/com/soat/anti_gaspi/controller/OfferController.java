@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+import com.soat.anti_gaspi.application.OfferMapper;
 import com.soat.anti_gaspi.model.Contact;
 import com.soat.anti_gaspi.model.Offer;
 import com.soat.anti_gaspi.model.Status;
@@ -26,6 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -39,49 +41,24 @@ public class OfferController {
     private final ContactRepository contactRepository;
     private final Clock clock;
 
-    private static final String EMAIL_REGEX = "^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$";
     private static final String FRENCH_PHONE_NUM_REGEX = "^(?:(?:\\+|00)33|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}$";
 
-    public OfferController(@Qualifier("emailService")  EmailService smailService, OfferRepository offerRepository, ContactRepository contactRepository, Clock clock) {
+    private final OfferMapper offerMapper = new OfferMapper();
+
+    public OfferController(@Qualifier("emailService") EmailService smailService, OfferRepository offerRepository, ContactRepository contactRepository, Clock clock) {
         this.smailService = smailService;
         this.offerRepository = offerRepository;
         this.contactRepository = contactRepository;
         this.clock = clock;
-        
+
     }
 
     @PostMapping("")
-    public ResponseEntity<UUID> create(@RequestBody OfferDto offerDto) {
-        Offer offer = new Offer(
-                offerDto.getCompanyName(),
-                offerDto.getTitle(),
-                offerDto.getDescription(),
-                offerDto.getEmail(),
-                offerDto.getAddress(),
-                LocalDate.parse(offerDto.getAvailabilityDate(), dateFormatter),
-                LocalDate.parse(offerDto.getExpirationDate(), dateFormatter));
-        if (!fieldValidator.test(offer.getCompanyName(), "CompanyName") ||
-                !fieldValidator.test(offer.getTitle(), "Title") ||
-                !fieldValidator.test(offer.getDescription(), "Description") ||
-                !fieldValidator.test(offer.getAddress(), "Address") ||
-                !validMatch.test(offer.getEmail(), EMAIL_REGEX) ||
-                offer.getAvailabilityDate().isBefore(LocalDate.now(clock)) ||
-                offer.getExpirationDate().isBefore(LocalDate.now(clock)) ||
-                offer.getAvailabilityDate().isAfter(offer.getExpirationDate())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<UUID> create(@RequestBody @Validated OfferDto offerDto) {
 
-        offer.setId(UUID.randomUUID());
+        var of = offerMapper.map(offerDto);
 
-        var saved = offerRepository.save(offer);
-
-
-
-//        String emailBody = String.format("%s %s %s %s %s", offer.getDescription(), offer.getAddress(), offer.getCompanyName(), offer.getAvailabilityDate(), offer.getExpirationDate());
-  //          smailService.sendEmail(offer.getTitle(), offer.getEmail(), emailBody);
-
-
-                    return new ResponseEntity<>(saved.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(UUID.randomUUID(), HttpStatus.CREATED);
     }
 
     BiPredicate<String, String> fieldValidator = (fieldValue, fieldName) -> {
@@ -163,15 +140,15 @@ public class OfferController {
         contact.setId(UUID.randomUUID());
         if (!fieldValidator.test(contact.getFirstName(), "FirstName") ||
                 !fieldValidator.test(contact.getLastName(), "LastName") ||
-                !validMatch.test(contactToSave.email(), EMAIL_REGEX) ||
                 !validMatch.test(contact.getPhoneNumber(), FRENCH_PHONE_NUM_REGEX)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         final Contact savedContact = contactRepository.save(contact);
         final Offer offer = offerRepository.findById(id).orElse(null);
-            smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", offer.getEmail(), "toto");
+        smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", offer.getEmail(), "toto");
         return new ResponseEntity<>(savedContact.getId(), HttpStatus.CREATED);
     }
+
     BiPredicate<String, String> validMatch = (value, regex) -> {
         final Pattern r = Pattern.compile(regex);
         final Matcher m = r.matcher(value);

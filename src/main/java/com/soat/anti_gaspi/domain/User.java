@@ -1,16 +1,14 @@
 package com.soat.anti_gaspi.domain;
 
 
-class User {
+public class User {
 
     private final String username;
     private final Email email;
-    private final Company company;
 
 
     private User(final Email email, Company company, String username) {
         this.email = email;
-        this.company = company;
         this.username = username;
     }
 
@@ -18,9 +16,6 @@ class User {
         return email;
     }
 
-    public Company getCompany() {
-        return company;
-    }
 
     public static UserBuilder builder() {
         return new UserBuilder();
@@ -36,11 +31,6 @@ class User {
 
         public UserBuilder email(final Email email) {
             this.email = email;
-            return this;
-        }
-
-        public UserBuilder company(final Company company) {
-            this.company = company;
             return this;
         }
 

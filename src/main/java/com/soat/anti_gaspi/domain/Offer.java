@@ -1,9 +1,11 @@
 package com.soat.anti_gaspi.domain;
 
+import com.soat.anti_gaspi.application.DomainEntity;
+
 import java.time.OffsetDateTime;
 
 
-public class Offer {
+public class Offer implements DomainEntity {
     private final OfferId offerId;
     private final String title;
     private final String description;

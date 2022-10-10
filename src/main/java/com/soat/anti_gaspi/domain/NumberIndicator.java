@@ -9,10 +9,6 @@ public class NumberIndicator {
         this.indicator = indicator;
     }
 
-    public static NumberIndicatorBuilder builder() {
-        return new NumberIndicatorBuilder();
-    }
-
     public int getNumber() {
         return number;
     }
@@ -21,25 +17,29 @@ public class NumberIndicator {
         return indicator;
     }
 
-    static class NumberIndicatorBuilder {
+    public static NumberIndicatorBuilder builder() {
+        return new NumberIndicatorBuilder();
+    }
+
+    public static class NumberIndicatorBuilder {
         private int number;
         private String indicator;
 
-        NumberIndicatorBuilder() {
+        public NumberIndicatorBuilder() {
 
         }
 
-        NumberIndicatorBuilder number(final int number) {
+        public NumberIndicatorBuilder number(final int number) {
             this.number = number;
             return this;
         }
 
-        NumberIndicatorBuilder indicator(final String indicator) {
+        public NumberIndicatorBuilder indicator(final String indicator) {
             this.indicator = indicator;
             return this;
         }
 
-        NumberIndicator build() {
+        public NumberIndicator build() {
             return new NumberIndicator(number, indicator);
         }
     }
