@@ -1,7 +1,7 @@
 package com.soat.anti_gaspi.application.offer.mappers;
 
 import com.soat.anti_gaspi.controller.OfferDto;
-import com.soat.anti_gaspi.domain.offer.Offer;
+import com.soat.anti_gaspi.domain.Offer;
 
 public class OfferMapper {
     
