@@ -4,7 +4,6 @@ public class NumberIndicator {
     private final int number;
     private final String indicator;
 
-
     public NumberIndicator(int number, String indicator) {
         this.number = number;
         this.indicator = indicator;
@@ -12,6 +11,14 @@ public class NumberIndicator {
 
     public static NumberIndicatorBuilder builder() {
         return new NumberIndicatorBuilder();
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getIndicator() {
+        return indicator;
     }
 
     static class NumberIndicatorBuilder {

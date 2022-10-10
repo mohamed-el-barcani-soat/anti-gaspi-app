@@ -15,8 +15,6 @@ public class Address {
         this.country = country;
     }
 
-
-
     public static AddressBuilder builder() {
         return new AddressBuilder();
     }
