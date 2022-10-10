@@ -65,9 +65,12 @@ public class Offer {
 
     public static class OfferBuilder {
         private Company company;
+
+        private OfferId id;
         private String title;
         private String description;
         private User user;
+        private Status status;
         private Address address;
         private OffsetDateTime availabilityDate;
         private OffsetDateTime expirationDate;
@@ -75,8 +78,20 @@ public class Offer {
         OfferBuilder() {
         }
 
+
+        public OfferBuilder id(OfferId id) {
+            this.id = id;
+            return this;
+        }
+
         public OfferBuilder companyName(Company company) {
             this.company = company;
+            return this;
+        }
+
+
+        public OfferBuilder status(Status status) {
+            this.status = status;
             return this;
         }
 
@@ -111,9 +126,7 @@ public class Offer {
         }
 
         public Offer build() {
-            // Toutes les constructions intelligentes vont se faire sur un aggrégat qui englobera l'offre (notamment l'ID)
-            var id = new OfferId("id");
-            return new Offer(id, title, description, user, address, availabilityDate, expirationDate, PENDING);
+            return new Offer(id, title, description, user, address, availabilityDate, expirationDate, status);
         }
     }
 }
