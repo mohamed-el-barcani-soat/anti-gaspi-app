@@ -7,7 +7,7 @@ import static com.soat.anti_gaspi.domain.Status.PENDING;
 
 public class Offer {
     private final OfferId offerId;
-    private final CompanyName companyName;
+    private final Company company;
     private final String title;
     private final String description;
     private final User user;
@@ -16,9 +16,9 @@ public class Offer {
     private final OffsetDateTime expirationDate;
     private final Status status;
 
-    private Offer(OfferId offerId, CompanyName companyName, String title, String description, User user, Address address, OffsetDateTime availabilityDate, OffsetDateTime expirationDate, Status status) {
+    private Offer(OfferId offerId, Company company, String title, String description, User user, Address address, OffsetDateTime availabilityDate, OffsetDateTime expirationDate, Status status) {
         this.offerId = offerId;
-        this.companyName = companyName;
+        this.company = company;
         this.title = title;
         this.description = description;
         this.user = user;
@@ -28,8 +28,8 @@ public class Offer {
         this.status = status;
     }
 
-    public CompanyName getCompanyName() {
-        return companyName;
+    public Company getCompanyName() {
+        return company;
     }
 
     public String getTitle() {
@@ -70,7 +70,7 @@ public class Offer {
     }
 
     public static class OfferBuilder {
-        private CompanyName companyName;
+        private Company company;
         private String title;
         private String description;
         private User user;
@@ -81,8 +81,8 @@ public class Offer {
         OfferBuilder() {
         }
 
-        public OfferBuilder companyName(CompanyName companyName) {
-            this.companyName = companyName;
+        public OfferBuilder companyName(Company company) {
+            this.company = company;
             return this;
         }
 
@@ -119,7 +119,7 @@ public class Offer {
         public Offer build() {
             // Toutes les constructions intelligentes vont se faire sur un aggrégat qui englobera l'offre (notamment l'ID)
             var id = new OfferId("id");
-            return new Offer(id, companyName, title, description, user, address, availabilityDate, expirationDate, PENDING);
+            return new Offer(id, company, title, description, user, address, availabilityDate, expirationDate, PENDING);
         }
     }
 }
