@@ -17,41 +17,41 @@ public class Address {
 
 
 
-    public static CreateAddressBuilder create() {
-        return new CreateAddressBuilder();
+    public static AddressBuilder builder() {
+        return new AddressBuilder();
     }
 
-    public static class CreateAddressBuilder {
+    public static class AddressBuilder {
         private  NumberIndicator numberIndicator;
         private  String street;
         private  String city;
         private  String zipcode;
         private  String country;
 
-        private CreateAddressBuilder() {
+        private AddressBuilder() {
         }
 
-        public CreateAddressBuilder number(final NumberIndicator numberIndicator) {
+        public AddressBuilder number(final NumberIndicator numberIndicator) {
             this.numberIndicator = numberIndicator;
             return this;
         }
 
-        public CreateAddressBuilder street(final String street) {
+        public AddressBuilder street(final String street) {
             this.street = street;
             return this;
         }
 
-        public CreateAddressBuilder city(final String city) {
+        public AddressBuilder city(final String city) {
             this.city = city;
             return this;
         }
 
-        public CreateAddressBuilder zipcode(final String zipcode) {
+        public AddressBuilder zipcode(final String zipcode) {
             this.zipcode = zipcode;
             return this;
         }
 
-        public CreateAddressBuilder country(final String country) {
+        public AddressBuilder country(final String country) {
             this.country = country;
             return this;
         }
