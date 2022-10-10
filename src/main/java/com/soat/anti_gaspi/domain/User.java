@@ -4,33 +4,45 @@ package com.soat.anti_gaspi.domain;
 
 class User {
 
-    private final String email;
+    private final Email email;
+    private final Company company;
 
-    private User(final String email) {
+    private User(final Email email, Company company) {
         this.email = email;
+        this.company = company;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public static CreateEmailBuilder create() {
-        return new CreateEmailBuilder();
+    public Company getCompany() {
+        return company;
     }
 
-    public static class CreateEmailBuilder {
-        private String value;
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
 
-        private CreateEmailBuilder() {
+    public static class UserBuilder {
+        private Email email;
+        private Company company;
+
+        private UserBuilder() {
         }
 
-        public CreateEmailBuilder email(final String value) {
-            this.value = value;
+        public UserBuilder email(final Email email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder company(final Company company) {
+            this.company = company;
             return this;
         }
 
         public User build() {
-            return new User(value);
+            return new User(email, company);
         }
     }
 }

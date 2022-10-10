@@ -7,18 +7,16 @@ import static com.soat.anti_gaspi.domain.Status.PENDING;
 
 public class Offer {
     private final OfferId offerId;
-    private final Company company;
     private final String title;
     private final String description;
     private final User user;
     private final Address address;
+    private final Status status;
     private final OffsetDateTime availabilityDate;
     private final OffsetDateTime expirationDate;
-    private final Status status;
 
-    private Offer(OfferId offerId, Company company, String title, String description, User user, Address address, OffsetDateTime availabilityDate, OffsetDateTime expirationDate, Status status) {
+    private Offer(OfferId offerId, String title, String description, User user, Address address, OffsetDateTime availabilityDate, OffsetDateTime expirationDate, Status status) {
         this.offerId = offerId;
-        this.company = company;
         this.title = title;
         this.description = description;
         this.user = user;
@@ -26,10 +24,6 @@ public class Offer {
         this.availabilityDate = availabilityDate;
         this.expirationDate = expirationDate;
         this.status = status;
-    }
-
-    public Company getCompanyName() {
-        return company;
     }
 
     public String getTitle() {
@@ -119,7 +113,7 @@ public class Offer {
         public Offer build() {
             // Toutes les constructions intelligentes vont se faire sur un aggrégat qui englobera l'offre (notamment l'ID)
             var id = new OfferId("id");
-            return new Offer(id, company, title, description, user, address, availabilityDate, expirationDate, PENDING);
+            return new Offer(id, title, description, user, address, availabilityDate, expirationDate, PENDING);
         }
     }
 }
