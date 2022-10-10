@@ -4,7 +4,7 @@ create table Offer
     company_name      varchar(255) not null,
     title             varchar(255) not null,
     description       varchar(255) not null,
-    email             varchar(255) not null,
+    user             varchar(255) not null,
     address           varchar(255) not null,
     availability_date timestamp,
     expiration_date   timestamp,

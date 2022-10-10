@@ -53,13 +53,13 @@ public class OfferController {
     @PostMapping("")
     public ResponseEntity<UUID> create(@RequestBody OfferDto offerDto) {
         Offer offer = new Offer(
-                offerDto.companyName(),
-                offerDto.title(),
-                offerDto.description(),
-                offerDto.email(),
-                offerDto.address(),
-                LocalDate.parse(offerDto.availabilityDate(), dateFormatter),
-                LocalDate.parse(offerDto.expirationDate(), dateFormatter));
+                offerDto.getCompanyName(),
+                offerDto.getTitle(),
+                offerDto.getDescription(),
+                offerDto.getEmail(),
+                offerDto.getAddress(),
+                LocalDate.parse(offerDto.getAvailabilityDate(), dateFormatter),
+                LocalDate.parse(offerDto.getExpirationDate(), dateFormatter));
         if (!fieldValidator.test(offer.getCompanyName(), "CompanyName") ||
                 !fieldValidator.test(offer.getTitle(), "Title") ||
                 !fieldValidator.test(offer.getDescription(), "Description") ||

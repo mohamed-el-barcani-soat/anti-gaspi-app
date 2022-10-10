@@ -1,5 +1,14 @@
 package com.soat.anti_gaspi.controller;
 
-public record OfferDto(String companyName, String title, String description, String email, String address, String availabilityDate, String expirationDate) {
+import lombok.Data;
 
+@Data
+public class OfferDto {
+    private final String companyName;
+    private final String title;
+    private final String description;
+    private final String email;
+    private final String address;
+    private final String availabilityDate;
+    private final String expirationDate;
 }
