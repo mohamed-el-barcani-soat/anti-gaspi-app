@@ -2,7 +2,8 @@ package com.soat.anti_gaspi.infrastructure.repositories;
 
 import java.util.UUID;
 
-import com.soat.anti_gaspi.model.Offer;
+import com.soat.anti_gaspi.domain.Offer;
+import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.model.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface OfferJpaRepository extends PagingAndSortingRepository<Offer, UU
 
     Page<Offer> findAll(Pageable pageable);
     Page<Offer> findAllByStatus(Status status, Pageable pageable);
+
+    Offer save(Offer offer);
 }

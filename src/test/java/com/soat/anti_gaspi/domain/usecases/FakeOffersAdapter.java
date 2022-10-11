@@ -1,24 +1,17 @@
-package com.soat.anti_gaspi.infrastructure.repositories;
+package com.soat.anti_gaspi.domain.usecases;
 
-import com.soat.anti_gaspi.domain.DomainRepository;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import com.soat.anti_gaspi.domain.OfferRepository;
 
 import java.util.Set;
 
-
-@Component
-@AllArgsConstructor
-public class OffersRepository implements DomainRepository<Offer, OfferId> {
-
-
-    private final OfferJpaRepository offerRepository;
+public class FakeOffersAdapter implements OfferRepository {
 
     @Override
     public OfferId save(Offer entity) {
-        return null;
+        var offerId = new OfferId("fakeId");
+        return offerId;
     }
 
     @Override

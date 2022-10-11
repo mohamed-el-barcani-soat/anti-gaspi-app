@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 
 import com.soat.anti_gaspi.application.OfferMapper;
-import com.soat.anti_gaspi.domain.usecases.CreateOffer;
+import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
 import com.soat.anti_gaspi.model.Offer;
@@ -41,13 +41,13 @@ public class OfferController {
     private final OfferJpaRepository offerRepository;
     private final ContactJpaRepository contactRepository;
     private final Clock clock;
-    private final CreateOffer createOffer;
+    private final CreateOfferUseCase createOffer;
 
     private static final String FRENCH_PHONE_NUM_REGEX = "^(?:(?:\\+|00)33|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}$";
 
     private final OfferMapper offerMapper = new OfferMapper();
 
-    public OfferController(@Qualifier("emailService") EmailService smailService, OfferJpaRepository offerRepository, ContactJpaRepository contactRepository, Clock clock, CreateOffer createOffer) {
+    public OfferController(@Qualifier("emailService") EmailService smailService, OfferJpaRepository offerRepository, ContactJpaRepository contactRepository, Clock clock, CreateOfferUseCase createOffer) {
         this.smailService = smailService;
         this.offerRepository = offerRepository;
         this.contactRepository = contactRepository;
