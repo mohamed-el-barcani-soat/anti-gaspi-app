@@ -3,8 +3,6 @@ package com.soat.anti_gaspi.domain.usecases;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.infrastructure.repositories.OffersRepository;
 
-import java.util.UUID;
-
 public class CreateOffer implements Usecase<Offer, String> {
 
     private final OffersRepository offers;
