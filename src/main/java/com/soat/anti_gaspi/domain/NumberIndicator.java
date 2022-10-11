@@ -1,6 +1,7 @@
 package com.soat.anti_gaspi.domain;
 
 public class NumberIndicator {
+    // TODO: remove indicator and change number int to string
     private final int number;
     private final String indicator;
 

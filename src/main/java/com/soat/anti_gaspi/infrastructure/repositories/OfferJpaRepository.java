@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
+// TODO: Replace UUID by a string
 public interface OfferJpaRepository extends JpaRepository<OfferEntity, UUID> {
-
+    //TODO: Delete unused methosds
     Page<OfferEntity> findAll(Pageable pageable);
     Page<OfferEntity> findAllByStatus(Status status, Pageable pageable);
 
-    OfferEntity save(OfferEntity offer);
 }

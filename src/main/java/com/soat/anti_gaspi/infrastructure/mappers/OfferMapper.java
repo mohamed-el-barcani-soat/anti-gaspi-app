@@ -2,22 +2,26 @@ package com.soat.anti_gaspi.infrastructure.mappers;
 
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.model.OfferEntity;
-
-import java.util.UUID;
+import com.soat.anti_gaspi.model.Status;
 
 public class OfferMapper extends Mapper<Offer, OfferEntity> {
 
         @Override
         protected OfferEntity to(Offer offer) {
-            return new OfferEntity(
-                    UUID.fromString(offer.getOfferId().value()),
-                    offer.getTitle(),
-                    offer.getDescription(),
-                    offer.getUser().getEmail().getValue(),
-                    offer.getAddress(),
-                    offer.getAvailabilityDate().toLocalDate(),
-                    offer.getExpirationDate().toLocalDate(),
-                    offer.getStatus().name()
-            );
+            return OfferEntity.OfferEntityBuilder.builder()
+                    .id(offer.getOfferId().id())
+                    .naturalId(offer.getOfferId().naturalId())
+                    .title(offer.getTitle())
+                    .description(offer.getDescription())
+                    .email(offer.getUser().getEmail().getValue())
+                    .numberAddress(String.valueOf(offer.getAddress().getNumber()))
+                    .streetAddress(offer.getAddress().getStreet())
+                    .cityAddress(offer.getAddress().getCity())
+                    .zipCodeAddress(offer.getAddress().getZipCode())
+                    .country(offer.getAddress().getCountry())
+                    .availabilityDate(offer.getAvailabilityDate().toLocalDate())
+                    .expirationDate(offer.getExpirationDate().toLocalDate())
+                    .status(Status.from(offer.getStatus().name()))
+                    .build();
         }
 }

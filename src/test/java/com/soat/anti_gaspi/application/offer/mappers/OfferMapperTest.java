@@ -41,7 +41,7 @@ class OfferMapperTest {
         var mapper = new OfferMapper();
 
         var offer = mapper.map(offerDto);
-        //assertEquals("Id généré", offer.getOfferId().value());
+        //assertEquals("Id généré", offer.getOfferId().id());
         assertThat(validTitle).isEqualTo(offer.getTitle());
         assertThat(validDescription).isEqualTo(offer.getDescription());
         assertThat(validEmail).isEqualTo(offer.getEmail());
@@ -68,7 +68,7 @@ class OfferMapperTest {
 
         var generatedId = availabityLocalDate.format(dateFormatter);
 
-        assertThat("Id généré").isEqualTo(offer.getOfferId().value());
+        assertThat("Id généré").isEqualTo(offer.getOfferId().id());
     }
     */
 

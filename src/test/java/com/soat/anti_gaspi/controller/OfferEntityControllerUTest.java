@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.http.HttpStatus.*;
 
+// TODO: Rename this class to OfferControllerUTest
 @ExtendWith(MockitoExtension.class)
 class OfferEntityControllerUTest {
 
