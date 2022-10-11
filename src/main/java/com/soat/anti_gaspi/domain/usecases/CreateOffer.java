@@ -5,7 +5,7 @@ import com.soat.anti_gaspi.infrastructure.repositories.OffersRepository;
 
 import java.util.UUID;
 
-public class CreateOffer implements Usecase<Offer, UUID> {
+public class CreateOffer implements Usecase<Offer, String> {
 
     private final OffersRepository offers;
 
@@ -14,8 +14,7 @@ public class CreateOffer implements Usecase<Offer, UUID> {
     }
 
     @Override
-    public UUID handle(final Offer entity) {
-        System.out.println(entity);
+    public String handle(final Offer entity) {
         entity.create();
         offers.save(entity);
         return null;
