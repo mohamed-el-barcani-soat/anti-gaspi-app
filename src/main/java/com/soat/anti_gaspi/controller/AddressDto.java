@@ -6,6 +6,8 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
+// Todo remove builder and data for no args and setter
 @Data
 public class AddressDto {
     @NotNull

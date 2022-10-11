@@ -1,5 +1,8 @@
 package com.soat.anti_gaspi.model;
 
+import com.soat.anti_gaspi.domain.DomainRepository;
+import com.soat.anti_gaspi.domain.OfferId;
+
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -27,6 +30,7 @@ public class Offer {
 
     @Column
     private Status status;
+
 
     public Offer(String companyName, String title, String description, String email, String address, LocalDate availabilityDate, LocalDate expirationDate) {
         this.companyName = companyName;
@@ -58,7 +62,6 @@ public class Offer {
     public UUID getId() {
         return id;
     }
-
 
     public String getCompanyName() {
         return companyName;

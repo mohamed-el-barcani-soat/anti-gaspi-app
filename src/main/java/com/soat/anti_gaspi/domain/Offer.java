@@ -1,6 +1,7 @@
 package com.soat.anti_gaspi.domain;
 
-import com.soat.anti_gaspi.application.DomainEntity;
+import com.soat.anti_gaspi.infrastructure.repositories.OffersRepository;
+import lombok.AllArgsConstructor;
 
 import java.time.OffsetDateTime;
 
@@ -14,6 +15,9 @@ public class Offer implements DomainEntity {
     private final Status status;
     private final OffsetDateTime availabilityDate;
     private final OffsetDateTime expirationDate;
+
+    private final OffersRepository offers;
+
 
     private Offer(OfferId offerId, String title, String description, User user, Address address, OffsetDateTime availabilityDate, OffsetDateTime expirationDate, Status status) {
         this.offerId = offerId;

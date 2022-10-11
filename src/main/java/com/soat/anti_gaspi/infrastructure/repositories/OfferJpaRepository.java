@@ -1,4 +1,4 @@
-package com.soat.anti_gaspi.repository;
+package com.soat.anti_gaspi.infrastructure.repositories;
 
 import java.util.UUID;
 
@@ -10,7 +10,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OfferRepository extends PagingAndSortingRepository<Offer, UUID> {
+public interface OfferJpaRepository extends PagingAndSortingRepository<Offer, UUID> {
 
     Page<Offer> findAll(Pageable pageable);
     Page<Offer> findAllByStatus(Status status, Pageable pageable);

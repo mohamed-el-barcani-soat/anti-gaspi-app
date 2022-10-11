@@ -1,28 +1,33 @@
 package com.soat.anti_gaspi.controller;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Data
+@NoArgsConstructor
+@Setter
+@Getter
 public class OfferDto {
 
     @NotNull
-    private final UserDto user;
+    private UserDto user;
 
     @NotEmpty
-    private final String title;
+    private String title;
 
     @NotEmpty
-    private final String description;
+    private String description;
 
     @NotNull
-    private final AddressDto address;
+    private AddressDto address;
 
     @NotEmpty
-    private final String availabilityDate;
+    private String availabilityDate;
 
     @NotEmpty
-    private final String expirationDate;
+    private String expirationDate;
 }

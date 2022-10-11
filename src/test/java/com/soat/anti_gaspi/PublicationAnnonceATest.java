@@ -8,11 +8,11 @@ import com.soat.anti_gaspi.controller.ContactToSave;
 import com.soat.anti_gaspi.controller.OfferController;
 import com.soat.anti_gaspi.controller.OfferPage;
 import com.soat.anti_gaspi.controller.SavedOffer;
+import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
 import com.soat.anti_gaspi.model.Offer;
 import com.soat.anti_gaspi.model.Status;
-import com.soat.anti_gaspi.repository.ContactRepository;
-import com.soat.anti_gaspi.repository.OfferRepository;
+import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -63,11 +63,11 @@ public class PublicationAnnonceATest extends ATest {
 
     public static final int STMP_PORT = 9999;
     @Autowired
-    private OfferRepository offerRepository;
+    private OfferJpaRepository offerRepository;
 
 
     @Autowired
-    private ContactRepository contactRepository;
+    private ContactJpaRepository contactRepository;
 
     private SimpleSmtpServer mailServer;
 

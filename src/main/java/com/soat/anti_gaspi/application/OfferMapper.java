@@ -7,6 +7,7 @@ import com.soat.anti_gaspi.domain.*;
 
 import java.time.OffsetDateTime;
 
+// En faire un component
 public class OfferMapper extends Mapper<OfferDto, Offer, CreateOfferValidator> {
 
     public OfferMapper() {

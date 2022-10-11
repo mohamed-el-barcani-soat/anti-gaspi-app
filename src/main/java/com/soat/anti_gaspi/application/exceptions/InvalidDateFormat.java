@@ -1,5 +1,7 @@
 package com.soat.anti_gaspi.application.exceptions;
 
+
+// TODO Add exception + use non breaking exception + super message ?
 public class InvalidDateFormat extends RuntimeException {
 
     private final String message;

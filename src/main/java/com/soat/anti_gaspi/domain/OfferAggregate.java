@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 public class OfferAggregate {
 
     private static OfferId createId(OffsetDateTime availabilityDate, Email email, String title) {
+        // TODO String joiner
         var offerId = availabilityDate.toString().concat(email.getValue()).concat(title);
 
         return new OfferId(offerId);

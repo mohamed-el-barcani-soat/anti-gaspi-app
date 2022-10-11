@@ -7,9 +7,9 @@ import java.time.ZoneId;
 import java.util.UUID;
 
 import com.dumbster.smtp.SimpleSmtpServer;
+import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.NotificationException;
-import com.soat.anti_gaspi.repository.ContactRepository;
-import com.soat.anti_gaspi.repository.OfferRepository;
+import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.service.EmailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,10 +29,10 @@ class OfferControllerUTest {
     private OfferController offerController;
 
     @Mock
-    private OfferRepository offerRepository;
+    private OfferJpaRepository offerRepository;
 
     @Mock
-    private ContactRepository contactRepository;
+    private ContactJpaRepository contactRepository;
 
     @Mock
     private EmailService smailService;

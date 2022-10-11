@@ -1,7 +1,6 @@
 package com.soat.anti_gaspi.controller;
 
 import java.time.Clock;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +12,11 @@ import java.util.regex.Pattern;
 
 
 import com.soat.anti_gaspi.application.OfferMapper;
+import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
 import com.soat.anti_gaspi.model.Offer;
 import com.soat.anti_gaspi.model.Status;
-import com.soat.anti_gaspi.repository.ContactRepository;
-import com.soat.anti_gaspi.repository.OfferRepository;
+import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +29,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+// Add validator ?
 @Slf4j
 @RestController
 @RequestMapping(OfferController.PATH)
@@ -37,15 +37,15 @@ public class OfferController {
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final String PATH = "/api/offers";
     private final EmailService smailService;
-    private final OfferRepository offerRepository;
-    private final ContactRepository contactRepository;
+    private final OfferJpaRepository offerRepository;
+    private final ContactJpaRepository contactRepository;
     private final Clock clock;
 
     private static final String FRENCH_PHONE_NUM_REGEX = "^(?:(?:\\+|00)33|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}$";
 
     private final OfferMapper offerMapper = new OfferMapper();
 
-    public OfferController(@Qualifier("emailService") EmailService smailService, OfferRepository offerRepository, ContactRepository contactRepository, Clock clock) {
+    public OfferController(@Qualifier("emailService") EmailService smailService, OfferJpaRepository offerRepository, ContactJpaRepository contactRepository, Clock clock) {
         this.smailService = smailService;
         this.offerRepository = offerRepository;
         this.contactRepository = contactRepository;
@@ -55,7 +55,7 @@ public class OfferController {
 
     @PostMapping("")
     public ResponseEntity<UUID> create(@RequestBody @Validated OfferDto offerDto) {
-
+        // Use validator of spring instead of mapper one ?
         var of = offerMapper.map(offerDto);
 
         return new ResponseEntity<>(UUID.randomUUID(), HttpStatus.CREATED);

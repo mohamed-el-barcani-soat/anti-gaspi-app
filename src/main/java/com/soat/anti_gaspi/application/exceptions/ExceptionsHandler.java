@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 
+
+    // TODO Use the same method for both exceptions
     @ExceptionHandler(InvalidDateFormat.class)
     @ResponseBody
     public ResponseEntity<RestException> handleConflict(InvalidDateFormat exception) {
