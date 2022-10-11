@@ -19,7 +19,7 @@ public class Address {
         return new AddressBuilder();
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return numberIndicator.getNumber();
     }
 

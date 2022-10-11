@@ -77,11 +77,11 @@ public class OfferController {
     public ResponseEntity<Void> confirm(@PathVariable("id") UUID uuid) {
         Optional<OfferEntity> maybeOffer = offerRepository.findById(uuid);
         AtomicReference<HttpStatus> status = new AtomicReference<>(HttpStatus.NOT_FOUND);
-        maybeOffer.ifPresent(offerEntity -> {
-            offerEntity.setStatus(Status.PUBLISHED);
-            offerRepository.save(offerEntity);
-            status.set(HttpStatus.ACCEPTED);
-        });
+//        maybeOffer.ifPresent(offerEntity -> {
+//            offerEntity.setStatus(Status.PUBLISHED);
+//            offerRepository.save(offerEntity);
+//            status.set(HttpStatus.ACCEPTED);
+//        });
         return new ResponseEntity<>(status.get());
     }
 
@@ -104,14 +104,7 @@ public class OfferController {
     }
 
     private SavedOffer toOfferSavedJson(OfferEntity offerEntity) {
-        return new SavedOffer(offerEntity.getId(),
-                offerEntity.getCompanyName(),
-                offerEntity.getTitle(),
-                offerEntity.getDescription(),
-                offerEntity.getEmail(),
-                offerEntity.getAddress(),
-                offerEntity.getAvailabilityDate(),
-                offerEntity.getExpirationDate());
+        return null;
     }
 
     @GetMapping("/{id}")
@@ -149,7 +142,7 @@ public class OfferController {
         }
         final Contact savedContact = contactRepository.save(contact);
         final OfferEntity offerEntity = offerRepository.findById(id).orElse(null);
-        smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", offerEntity.getEmail(), "toto");
+        smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", null, "toto");
         return new ResponseEntity<>(savedContact.getId(), HttpStatus.CREATED);
     }
 

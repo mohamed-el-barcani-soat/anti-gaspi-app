@@ -1,14 +1,20 @@
 package com.soat.anti_gaspi.model;
 
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.Type;
 
-import java.time.LocalDate;
-import java.util.UUID;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 @Entity
 public class OfferEntity {
+
+    protected OfferEntity() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,16 +45,15 @@ public class OfferEntity {
     private String country;
 
     @Column
-    private LocalDate availabilityDate;
+    private LocalDateTime availabilityDate;
 
     @Column
-    private LocalDate expirationDate;
+    private LocalDateTime expirationDate;
 
     @Column
     private Status status;
 
-    private OfferEntity(String id, String naturalId, String title, String description, String email, String numberAddress, String streetAddress, String cityAddress, String zipCodeAddress, String country, LocalDate availabilityDate, LocalDate expirationDate, Status status) {
-        this.id = id;
+    private OfferEntity(String naturalId, String title, String description, String email, String numberAddress, String streetAddress, String cityAddress, String zipCodeAddress, String country, LocalDateTime availabilityDate, LocalDateTime expirationDate, Status status) {
         this.naturalId = naturalId;
         this.title = title;
         this.description = description;
@@ -75,8 +80,8 @@ public class OfferEntity {
         private String cityAddress;
         private String zipCodeAddress;
         private String country;
-        private LocalDate availabilityDate;
-        private LocalDate expirationDate;
+        private LocalDateTime availabilityDate;
+        private LocalDateTime expirationDate;
         private Status status;
 
         public static OfferEntityBuilder builder() {
@@ -133,12 +138,12 @@ public class OfferEntity {
             return this;
         }
 
-        public OfferEntityBuilder availabilityDate(LocalDate availabilityDate) {
+        public OfferEntityBuilder availabilityDate(LocalDateTime availabilityDate) {
             this.availabilityDate = availabilityDate;
             return this;
         }
 
-        public OfferEntityBuilder expirationDate(LocalDate expirationDate) {
+        public OfferEntityBuilder expirationDate(LocalDateTime expirationDate) {
             this.expirationDate = expirationDate;
             return this;
         }
@@ -149,7 +154,7 @@ public class OfferEntity {
         }
 
         public OfferEntity build() {
-            return new OfferEntity(id, naturalId, title, description, email, numberAddress, streetAddress, cityAddress, zipCodeAddress, country, availabilityDate, expirationDate, status);
+            return new OfferEntity(naturalId, title, description, email, numberAddress, streetAddress, cityAddress, zipCodeAddress, country, availabilityDate, expirationDate, status);
         }
     }
 }

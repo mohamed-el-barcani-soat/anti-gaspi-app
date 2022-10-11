@@ -13,6 +13,6 @@ public class CreateOfferUseCase {
     public String create(final Offer offer) {
         offer.validate();
         var offerId = offers.save(offer);
-        return offerId.id();
+        return offerId.naturalId();
     }
 }

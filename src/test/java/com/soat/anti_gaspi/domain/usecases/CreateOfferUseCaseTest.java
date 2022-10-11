@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-//TODO: Rename this class to CreateOfferUseCaseTest
-class CreateOfferUseCaseTestEntity {
+class CreateOfferUseCaseTest {
 
     private CreateOfferUseCase createOffer;
 

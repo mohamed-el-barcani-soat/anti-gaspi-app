@@ -9,7 +9,6 @@ public class OfferMapper extends Mapper<Offer, OfferEntity> {
         @Override
         protected OfferEntity to(Offer offer) {
             return OfferEntity.OfferEntityBuilder.builder()
-                    .id(offer.getOfferId().id())
                     .naturalId(offer.getOfferId().naturalId())
                     .title(offer.getTitle())
                     .description(offer.getDescription())
@@ -19,8 +18,8 @@ public class OfferMapper extends Mapper<Offer, OfferEntity> {
                     .cityAddress(offer.getAddress().getCity())
                     .zipCodeAddress(offer.getAddress().getZipCode())
                     .country(offer.getAddress().getCountry())
-                    .availabilityDate(offer.getAvailabilityDate().toLocalDate())
-                    .expirationDate(offer.getExpirationDate().toLocalDate())
+                    .availabilityDate(offer.getAvailabilityDate().toLocalDateTime())
+                    .expirationDate(offer.getExpirationDate().toLocalDateTime())
                     .status(Status.from(offer.getStatus().name()))
                     .build();
         }

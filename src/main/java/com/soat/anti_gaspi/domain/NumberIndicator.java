@@ -1,47 +1,35 @@
 package com.soat.anti_gaspi.domain;
 
 public class NumberIndicator {
-    // TODO: remove indicator and change number int to string
-    private final int number;
-    private final String indicator;
+    private final String number;
 
-    public NumberIndicator(int number, String indicator) {
+    public NumberIndicator(String number) {
         this.number = number;
-        this.indicator = indicator;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public String getIndicator() {
-        return indicator;
-    }
 
     public static NumberIndicatorBuilder builder() {
         return new NumberIndicatorBuilder();
     }
 
     public static class NumberIndicatorBuilder {
-        private int number;
-        private String indicator;
-
+        private String number;
         public NumberIndicatorBuilder() {
 
         }
 
-        public NumberIndicatorBuilder number(final int number) {
+        public NumberIndicatorBuilder number(final String number) {
             this.number = number;
             return this;
         }
 
-        public NumberIndicatorBuilder indicator(final String indicator) {
-            this.indicator = indicator;
-            return this;
-        }
 
         public NumberIndicator build() {
-            return new NumberIndicator(number, indicator);
+            return new NumberIndicator(number);
         }
     }
 }
