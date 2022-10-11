@@ -10,7 +10,7 @@ import com.soat.anti_gaspi.controller.OfferPage;
 import com.soat.anti_gaspi.controller.SavedOffer;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
-import com.soat.anti_gaspi.model.Offer;
+import com.soat.anti_gaspi.model.OfferEntity;
 import com.soat.anti_gaspi.model.Status;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import io.cucumber.datatable.DataTable;
@@ -79,7 +79,7 @@ public class PublicationAnnonceATest extends ATest {
     private String address;
     private LocalDate availabilityDate;
     private LocalDate expirationDate;
-    private Offer offerToSave;
+    private OfferEntity offerEntityToSave;
     private String lastName;
     private String firstName;
     private String phoneNumber;
@@ -140,8 +140,7 @@ public class PublicationAnnonceATest extends ATest {
 
     @Quand("on tente une publication d’une annonce")
     public void onTenteUnePublicationDUneAnnonce() throws JsonProcessingException {
-        offerToSave = new Offer(
-                companyName,
+        offerEntityToSave = new OfferEntity(
                 title,
                 description,
                 email,
@@ -150,7 +149,7 @@ public class PublicationAnnonceATest extends ATest {
                 expirationDate
         );
 
-        String body = objectMapper.writeValueAsString(offerToSave);
+        String body = objectMapper.writeValueAsString(offerEntityToSave);
         //@formatter:off
         response = given()
                 .log().all()
@@ -173,7 +172,7 @@ public class PublicationAnnonceATest extends ATest {
         assertThat(savedOffer).isNotNull();
         assertThat(savedOffer).usingRecursiveComparison()
                 .ignoringFields("id")
-                .isEqualTo(this.offerToSave);
+                .isEqualTo(this.offerEntityToSave);
         assertThat(savedOffer.getStatus()).isEqualTo(status);
     }
 
@@ -186,13 +185,13 @@ public class PublicationAnnonceATest extends ATest {
         List<String> destinataires = sentEmail.getHeaderValues("To");
         assertThat(destinataires).hasSize(1);
         assertThat(destinataires.get(0)).isEqualTo(email);
-        assertThat(sentEmail.getHeaderValue("Subject")).contains(offerToSave.getTitle());
+        assertThat(sentEmail.getHeaderValue("Subject")).contains(offerEntityToSave.getTitle());
         String body = decodeBody(sentEmail);
-        assertThat(body).contains(offerToSave.getDescription());
-        assertThat(body).contains(offerToSave.getCompanyName());
-        assertThat(body).contains(offerToSave.getAddress());
-        assertThat(body).contains(offerToSave.getAvailabilityDate().toString());
-        assertThat(body).contains(offerToSave.getExpirationDate().toString());
+        assertThat(body).contains(offerEntityToSave.getDescription());
+        assertThat(body).contains(offerEntityToSave.getCompanyName());
+        assertThat(body).contains(offerEntityToSave.getAddress());
+        assertThat(body).contains(offerEntityToSave.getAvailabilityDate().toString());
+        assertThat(body).contains(offerEntityToSave.getExpirationDate().toString());
     }
 
     private String decodeBody(SmtpMessage email) throws DecoderException {
@@ -221,12 +220,12 @@ public class PublicationAnnonceATest extends ATest {
 
     @Etantdonné("les annnonces sauvegardées:")
     public void lesAnnnonces(DataTable dataTable) {
-        List<Offer> offers = dataTableTransformEntries(dataTable, PublicationAnnonceATest::buildOffer);
-        offerRepository.saveAll(offers);
+        List<OfferEntity> offerEntities = dataTableTransformEntries(dataTable, PublicationAnnonceATest::buildOffer);
+        offerRepository.saveAll(offerEntities);
     }
 
-    private static Offer buildOffer(Map<String, String> entry) {
-        return new Offer(
+    private static OfferEntity buildOffer(Map<String, String> entry) {
+        return new OfferEntity(
                 UUID.fromString(entry.get("id")),
                 entry.get("entreprise"),
                 entry.get("titre"),
@@ -329,11 +328,11 @@ public class PublicationAnnonceATest extends ATest {
     public void lesAnnoncesEnBaseSont(DataTable dataTable) {
         var expectedSavedOffers = dataTableTransformEntries(dataTable, PublicationAnnonceATest::buildOffer);
 
-        List<Offer> savedOffers = (List<Offer>) offerRepository.findAll();
+        List<OfferEntity> savedOfferEntities = (List<OfferEntity>) offerRepository.findAll();
 
-        assertThat(savedOffers)
+        assertThat(savedOfferEntities)
                 .usingRecursiveFieldByFieldElementComparator()
-                .containsExactlyInAnyOrder(expectedSavedOffers.toArray(Offer[]::new));
+                .containsExactlyInAnyOrder(expectedSavedOffers.toArray(OfferEntity[]::new));
     }
 
     @Quand("on tente d'afficher l annonce {string}")

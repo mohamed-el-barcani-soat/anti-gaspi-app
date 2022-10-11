@@ -12,10 +12,11 @@ import java.util.regex.Pattern;
 
 
 import com.soat.anti_gaspi.application.OfferMapper;
+import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
-import com.soat.anti_gaspi.model.Offer;
+import com.soat.anti_gaspi.model.OfferEntity;
 import com.soat.anti_gaspi.model.Status;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.service.EmailService;
@@ -74,11 +75,11 @@ public class OfferController {
 
     @PostMapping("/{id}/confirm")
     public ResponseEntity<Void> confirm(@PathVariable("id") UUID uuid) {
-        Optional<Offer> maybeOffer = offerRepository.findById(uuid);
+        Optional<OfferEntity> maybeOffer = offerRepository.findById(uuid);
         AtomicReference<HttpStatus> status = new AtomicReference<>(HttpStatus.NOT_FOUND);
-        maybeOffer.ifPresent(offer -> {
-            offer.setStatus(Status.PUBLISHED);
-            offerRepository.save(offer);
+        maybeOffer.ifPresent(offerEntity -> {
+            offerEntity.setStatus(Status.PUBLISHED);
+            offerRepository.save(offerEntity);
             status.set(HttpStatus.ACCEPTED);
         });
         return new ResponseEntity<>(status.get());
@@ -91,7 +92,7 @@ public class OfferController {
                                                         @RequestParam(defaultValue = "asc") String sortOrder) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, "desc".equals(sortOrder) ? Sort.by(sortBy).descending() : Sort.by(sortBy));
 
-        Page<Offer> allOffers = offerRepository.findAllByStatus(Status.PUBLISHED, pageable);
+        Page<OfferEntity> allOffers = offerRepository.findAllByStatus(Status.PUBLISHED, pageable);
 
         List<SavedOffer> savedOffers = allOffers.stream()
                 .map(this::toOfferSavedJson)
@@ -102,15 +103,15 @@ public class OfferController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    private SavedOffer toOfferSavedJson(Offer offer) {
-        return new SavedOffer(offer.getId(),
-                offer.getCompanyName(),
-                offer.getTitle(),
-                offer.getDescription(),
-                offer.getEmail(),
-                offer.getAddress(),
-                offer.getAvailabilityDate(),
-                offer.getExpirationDate());
+    private SavedOffer toOfferSavedJson(OfferEntity offerEntity) {
+        return new SavedOffer(offerEntity.getId(),
+                offerEntity.getCompanyName(),
+                offerEntity.getTitle(),
+                offerEntity.getDescription(),
+                offerEntity.getEmail(),
+                offerEntity.getAddress(),
+                offerEntity.getAvailabilityDate(),
+                offerEntity.getExpirationDate());
     }
 
     @GetMapping("/{id}")
@@ -147,8 +148,8 @@ public class OfferController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         final Contact savedContact = contactRepository.save(contact);
-        final Offer offer = offerRepository.findById(id).orElse(null);
-        smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", offer.getEmail(), "toto");
+        final OfferEntity offerEntity = offerRepository.findById(id).orElse(null);
+        smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", offerEntity.getEmail(), "toto");
         return new ResponseEntity<>(savedContact.getId(), HttpStatus.CREATED);
     }
 

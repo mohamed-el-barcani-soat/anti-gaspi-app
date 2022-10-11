@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.springframework.http.HttpStatus.*;
 
 @ExtendWith(MockitoExtension.class)
-class OfferControllerUTest {
+class OfferEntityControllerUTest {
 
     private OfferController offerController;
 

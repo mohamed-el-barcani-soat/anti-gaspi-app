@@ -32,7 +32,7 @@ public class Offer implements DomainEntity {
         return description;
     }
 
-    public User getEmail() {
+    public User getUser() {
         return user;
     }
 
