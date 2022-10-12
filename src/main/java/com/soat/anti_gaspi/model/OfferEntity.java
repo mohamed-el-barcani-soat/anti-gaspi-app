@@ -2,12 +2,7 @@ package com.soat.anti_gaspi.model;
 
 import org.hibernate.annotations.NaturalId;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,16 +25,16 @@ public class OfferEntity {
     private String email;
 
     @Column
-    private String numberAddress;
+    private String number;
 
     @Column
-    private String streetAddress;
+    private String street;
 
     @Column
-    private String cityAddress;
+    private String city;
 
     @Column
-    private String zipCodeAddress;
+    private String zipCode;
 
     @Column
     private String country;
@@ -51,17 +46,69 @@ public class OfferEntity {
     private LocalDateTime expirationDate;
 
     @Column
-    private Status status;
+    private com.soat.anti_gaspi.domain.Status  status;
 
-    private OfferEntity(String naturalId, String title, String description, String email, String numberAddress, String streetAddress, String cityAddress, String zipCodeAddress, String country, LocalDateTime availabilityDate, LocalDateTime expirationDate, Status status) {
+    public String getId() {
+        return id;
+    }
+
+    public String getNaturalId() {
+        return naturalId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public LocalDateTime getAvailabilityDate() {
+        return availabilityDate;
+    }
+
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public com.soat.anti_gaspi.domain.Status  getStatus() {
+        return status;
+    }
+
+    private OfferEntity(String naturalId, String title, String description, String email, String number, String street, String city, String zipCode, String country, LocalDateTime availabilityDate, LocalDateTime expirationDate, com.soat.anti_gaspi.domain.Status  status) {
         this.naturalId = naturalId;
         this.title = title;
         this.description = description;
         this.email = email;
-        this.numberAddress = numberAddress;
-        this.streetAddress = streetAddress;
-        this.cityAddress = cityAddress;
-        this.zipCodeAddress = zipCodeAddress;
+        this.number = number;
+        this.street = street;
+        this.city = city;
+        this.zipCode = zipCode;
         this.country = country;
         this.availabilityDate = availabilityDate;
         this.expirationDate = expirationDate;
@@ -82,7 +129,7 @@ public class OfferEntity {
         private String country;
         private LocalDateTime availabilityDate;
         private LocalDateTime expirationDate;
-        private Status status;
+        private com.soat.anti_gaspi.domain.Status status;
 
         public static OfferEntityBuilder builder() {
             return new OfferEntityBuilder();
@@ -148,7 +195,7 @@ public class OfferEntity {
             return this;
         }
 
-        public OfferEntityBuilder status(Status status) {
+        public OfferEntityBuilder status(com.soat.anti_gaspi.domain.Status  status) {
             this.status = status;
             return this;
         }

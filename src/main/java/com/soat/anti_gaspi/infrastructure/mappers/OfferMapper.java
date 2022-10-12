@@ -1,12 +1,12 @@
 package com.soat.anti_gaspi.infrastructure.mappers;
 
-import com.soat.anti_gaspi.domain.Offer;
+import com.soat.anti_gaspi.domain.*;
 import com.soat.anti_gaspi.model.OfferEntity;
-import com.soat.anti_gaspi.model.Status;
 
-public class OfferMapper extends Mapper<Offer, OfferEntity> {
+import java.time.OffsetDateTime;
 
-        @Override
+public class OfferMapper  {
+
         protected OfferEntity to(Offer offer) {
             return OfferEntity.OfferEntityBuilder.builder()
                     .naturalId(offer.getOfferId().naturalId())
@@ -21,6 +21,27 @@ public class OfferMapper extends Mapper<Offer, OfferEntity> {
                     .availabilityDate(offer.getAvailabilityDate().toLocalDateTime())
                     .expirationDate(offer.getExpirationDate().toLocalDateTime())
                     .status(Status.from(offer.getStatus().name()))
+                    .build();
+        }
+
+        protected Offer to(OfferEntity offerEntity) {
+            return Offer.builder()
+                    .offerId(new OfferId(offerEntity.getNaturalId()))
+                    .title(offerEntity.getTitle())
+                    .description(offerEntity.getDescription())
+                    .user(User.builder().email(Email.builder().value(offerEntity.getEmail()).build()).build())
+                    .address(
+                            Address.builder()
+                                    .number(
+                                            NumberIndicator.builder().number(offerEntity.getNumber()).build())
+                                    .street(offerEntity.getStreet())
+                                    .city(offerEntity.getCity())
+                                    .zipcode(offerEntity.getZipCode())
+                                    .country(offerEntity.getCountry())
+                                    .build())
+                    .availabilityDate(offerEntity.getAvailabilityDate().atOffset(OffsetDateTime.now().getOffset()))
+                    .expirationDate(offerEntity.getExpirationDate().atOffset(OffsetDateTime.now().getOffset()))
+                    .status(Status.from(offerEntity.getStatus().name()))
                     .build();
         }
 }

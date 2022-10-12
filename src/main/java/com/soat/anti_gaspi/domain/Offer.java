@@ -66,9 +66,8 @@ public class Offer implements DomainEntity {
     }
 
     public static class OfferBuilder {
-        private Company company;
 
-        private OfferId id;
+        private OfferId offerId;
         private String title;
         private String description;
         private User user;
@@ -81,8 +80,8 @@ public class Offer implements DomainEntity {
         }
 
 
-        public OfferBuilder id(OfferId id) {
-            this.id = id;
+        public OfferBuilder offerId(OfferId offerId) {
+            this.offerId = offerId;
             return this;
         }
 
@@ -123,7 +122,7 @@ public class Offer implements DomainEntity {
         }
 
         public Offer build() {
-            return new Offer(id, title, description, user, address, availabilityDate, expirationDate, status);
+            return new Offer(offerId, title, description, user, address, availabilityDate, expirationDate, status);
         }
     }
 }

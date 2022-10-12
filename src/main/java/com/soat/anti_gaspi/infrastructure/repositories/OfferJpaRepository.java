@@ -7,12 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 // TODO: Replace UUID by a string
 public interface OfferJpaRepository extends JpaRepository<OfferEntity, UUID> {
     //TODO: Delete unused methosds
+    OfferEntity save(OfferEntity offerEntity);
     Page<OfferEntity> findAll(Pageable pageable);
     Page<OfferEntity> findAllByStatus(Status status, Pageable pageable);
 

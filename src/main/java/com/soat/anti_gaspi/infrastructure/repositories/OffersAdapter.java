@@ -16,7 +16,8 @@ public class OffersAdapter implements OfferRepository {
     private final OfferJpaRepository offerRepository;
 
     @Override
-    public OfferId save(Offer entity) {
+    public OfferId save(Offer offer) {
+        //return offerRepository.save(null).getOfferId();
         return null;
     }
 

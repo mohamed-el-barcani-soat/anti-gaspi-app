@@ -57,7 +57,7 @@ public class OfferController {
         this.createOffer = createOffer;
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<UUID> create(@RequestBody @Validated OfferDto offerDto) {
         // Use validator of spring instead of mapper one ?
         var of = offerMapper.map(offerDto);

@@ -7,7 +7,7 @@ public class User {
     private final Email email;
 
 
-    private User(final Email email, Company company, String username) {
+    private User(final Email email, String username) {
         this.email = email;
         this.username = username;
     }
@@ -23,7 +23,6 @@ public class User {
 
     public static class UserBuilder {
         private Email email;
-        private Company company;
         private String username;
 
         private UserBuilder() {
@@ -40,7 +39,7 @@ public class User {
         }
 
         public User build() {
-            return new User(email, company, username);
+            return new User(email, username);
         }
 
     }

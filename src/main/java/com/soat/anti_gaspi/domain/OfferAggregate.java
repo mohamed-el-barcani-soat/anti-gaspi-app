@@ -66,7 +66,7 @@ public class OfferAggregate {
 
         public Offer build() {
             return Offer.builder()
-                    .id(createId(availabilityDate, user.getEmail(), title))
+                    .offerId(createId(availabilityDate, user.getEmail(), title))
                     .user(user)
                     .title(title)
                     .description(description)
