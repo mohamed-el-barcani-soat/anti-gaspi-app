@@ -9,10 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig {
 
-    @Value("${REACT_ENV}")
+    @Value("${CUSTOMCONNSTR_REACT_ENV}")
     private String REACT_APP;
 
-    @Value("${ANGULAR_ENV}")
+    @Value("${CUSTOMCONNSTR_ANGULAR_ENV}")
     private String ANGULAR_APP;
 
     @Bean
