@@ -1,5 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
+import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.model.OfferEntity;
 import com.soat.anti_gaspi.model.Status;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,5 @@ public interface OfferJpaRepository extends JpaRepository<OfferEntity, UUID> {
     Page<OfferEntity> findAll(Pageable pageable);
     Page<OfferEntity> findAllByStatus(Status status, Pageable pageable);
 
+    OfferEntity findByNaturalId(String naturalId);
 }

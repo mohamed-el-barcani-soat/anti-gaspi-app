@@ -3,6 +3,7 @@ package com.soat.anti_gaspi.infrastructure.repositories;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.OfferRepository;
+import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +15,12 @@ import java.util.Set;
 public class OffersAdapter implements OfferRepository {
 
     private final OfferJpaRepository offerRepository;
+    private final OfferMapper offerMapper;
 
     @Override
     public OfferId save(Offer offer) {
-        //return offerRepository.save(null).getOfferId();
-        return null;
+        var offerEntity = offerMapper.toEntity(offer);
+        return offerMapper.toOffer(offerRepository.save(offerEntity)).getOfferId();
     }
 
     @Override

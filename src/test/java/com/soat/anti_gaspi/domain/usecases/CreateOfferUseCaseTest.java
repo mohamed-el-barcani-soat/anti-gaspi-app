@@ -19,7 +19,7 @@ class CreateOfferUseCaseTest {
 
         createOffer = new CreateOfferUseCase(offers);
         OfferId offerId = new OfferId("fakeId");
-        Offer offer = Offer.builder().id(offerId).build();
+        Offer offer = Offer.builder().offerId(offerId).build();
 
         String uuid = createOffer.create(offer);
 
