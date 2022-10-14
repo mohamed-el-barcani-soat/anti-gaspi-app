@@ -13,11 +13,10 @@ public class WebConfig {
     private String REACT_APP;
 
     @Value("${CUSTOMCONNSTR_ANGULAR_ENV}")
-
     private String ANGULAR_APP;
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public WebMvcConfigurer corsConfigurer() { // TODO : find better way to allow origins than WebMvcConfigurer
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
