@@ -13,6 +13,7 @@ public class WebConfig {
     private String REACT_APP;
 
     @Value("${CUSTOMCONNSTR_ANGULAR_ENV}")
+
     private String ANGULAR_APP;
 
     @Bean
