@@ -1,4 +1,4 @@
 package com.soat.anti_gaspi.domain;
 
-public record OfferId(String naturalId) {
+public record OfferId(String value) {
 }

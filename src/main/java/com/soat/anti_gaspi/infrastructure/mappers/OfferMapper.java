@@ -11,7 +11,7 @@ public class OfferMapper {
 
         public OfferEntity toEntity(Offer offer) {
             return OfferEntity.OfferEntityBuilder.builder()
-                    .naturalId(offer.getOfferId().naturalId())
+                    .naturalId(offer.getOfferId().value())
                     .title(offer.getTitle())
                     .description(offer.getDescription())
                     .email(offer.getUser().getEmail().getValue())

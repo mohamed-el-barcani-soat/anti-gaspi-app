@@ -2,9 +2,12 @@ package com.soat.anti_gaspi.domain;
 
 import java.util.Set;
 
-public interface OfferRepository extends DomainRepository<Offer, OfferId> {
+public interface Offers extends DomainRepository<Offer, OfferId> {
     @Override
-    OfferId save(Offer entity);
+    OfferId create(Offer entity);
+
+    @Override
+    OfferId update(Offer entity);
 
     @Override
     void delete(Offer entity);

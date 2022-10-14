@@ -2,16 +2,20 @@ package com.soat.anti_gaspi.domain.usecases;
 
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.OfferRepository;
+import com.soat.anti_gaspi.domain.Offers;
 
 import java.util.Set;
 
-public class FakeOffersAdapter implements OfferRepository {
+public class FakeOffersAdapter implements Offers {
 
     @Override
-    public OfferId save(Offer entity) {
+    public OfferId create(Offer entity) {
         var offerId = new OfferId("fakeId");
-        return offerId;
+        return offerId;    }
+
+    @Override
+    public OfferId update(Offer entity) {
+        return null;
     }
 
     @Override

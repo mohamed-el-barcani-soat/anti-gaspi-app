@@ -2,7 +2,7 @@ package com.soat.anti_gaspi.domain.usecases;
 
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.OfferRepository;
+import com.soat.anti_gaspi.domain.Offers;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -11,7 +11,7 @@ class CreateOfferUseCaseTest {
 
     private CreateOfferUseCase createOffer;
 
-    private OfferRepository offers = new FakeOffersAdapter();
+    private Offers offers = new FakeOffersAdapter();
 
     @Test
     void should_return_created_offer_UUID(){
