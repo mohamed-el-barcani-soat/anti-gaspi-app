@@ -1,18 +1,18 @@
 package com.soat.anti_gaspi.domain.usecases;
 
 import com.soat.anti_gaspi.domain.Offer;
-import com.soat.anti_gaspi.domain.Offers;
+import com.soat.anti_gaspi.domain.OfferRepository;
 
 public class CreateOfferUseCase {
-    private final Offers offers;
+    private final OfferRepository offerRepository;
 
-    public CreateOfferUseCase(Offers offers) {
-        this.offers = offers;
+    public CreateOfferUseCase(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
     }
 
     public String create(final Offer offer) {
         offer.validate();
-        var offerId = offers.create(offer);
+        var offerId = offerRepository.create(offer);
         return offerId.value();
     }
 }

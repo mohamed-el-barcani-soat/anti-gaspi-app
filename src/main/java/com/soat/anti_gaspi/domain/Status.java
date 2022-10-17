@@ -7,7 +7,6 @@ public enum Status {
     REJECTED("rejected"),
     PENDING("pending");
 
-
     private String value;
 
     Status(String value) {

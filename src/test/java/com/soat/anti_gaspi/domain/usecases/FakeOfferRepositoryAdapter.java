@@ -2,11 +2,11 @@ package com.soat.anti_gaspi.domain.usecases;
 
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.Offers;
+import com.soat.anti_gaspi.domain.OfferRepository;
 
 import java.util.Set;
 
-public class FakeOffersAdapter implements Offers {
+public class FakeOfferRepositoryAdapter implements OfferRepository {
 
     @Override
     public OfferId create(Offer entity) {
@@ -14,7 +14,7 @@ public class FakeOffersAdapter implements Offers {
         return offerId;    }
 
     @Override
-    public OfferId update(Offer entity) {
+    public Offer update(Offer entity) {
         return null;
     }
 
@@ -25,11 +25,6 @@ public class FakeOffersAdapter implements Offers {
 
     @Override
     public Offer find(OfferId offerId) {
-        return null;
-    }
-
-    @Override
-    public Set<Offer> findAll() {
         return null;
     }
 }

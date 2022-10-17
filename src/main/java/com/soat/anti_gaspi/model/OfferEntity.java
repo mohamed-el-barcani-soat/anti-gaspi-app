@@ -5,48 +5,67 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "offer")//todo table
 public class OfferEntity {
+    @Override
+    public String toString() {
+        return "OfferEntity{" +
+                "id='" + id + '\'' +
+                ", naturalId='" + naturalId + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", email='" + email + '\'' +
+                ", number='" + number + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", availabilityDate=" + availabilityDate +
+                ", expirationDate=" + expirationDate +
+                ", status=" + status +
+                '}';
+    }
 
     protected OfferEntity() {
     }
 
-    @Id
+    @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @NaturalId
+    @NaturalId()
+    @Column(name = "natural_id")
     private String naturalId;
-    @Column
+    @Column(name = "title")
     private String title;
-    @Column
+    @Column(name = "description")
     private String description;
-    @Column
+    @Column(name = "email")
     private String email;
 
-    @Column
+    @Column(name = "number")
     private String number;
 
-    @Column
+    @Column(name = "street")
     private String street;
 
-    @Column
+    @Column(name = "city")
     private String city;
 
-    @Column
+    @Column(name = "zip_code")
     private String zipCode;
 
-    @Column
+    @Column(name = "country")
     private String country;
 
-    @Column
+    @Column(name = "availability_date")
     private LocalDateTime availabilityDate;
 
-    @Column
+    @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
 
-    @Column
-    private com.soat.anti_gaspi.domain.Status  status;
+    @Enumerated(EnumType.STRING)
+    private com.soat.anti_gaspi.domain.Status status;
 
     public String getId() {
         return id;
@@ -96,11 +115,11 @@ public class OfferEntity {
         return expirationDate;
     }
 
-    public com.soat.anti_gaspi.domain.Status  getStatus() {
+    public com.soat.anti_gaspi.domain.Status getStatus() {
         return status;
     }
 
-    private OfferEntity(String naturalId, String title, String description, String email, String number, String street, String city, String zipCode, String country, LocalDateTime availabilityDate, LocalDateTime expirationDate, com.soat.anti_gaspi.domain.Status  status) {
+    private OfferEntity(String naturalId, String title, String description, String email, String number, String street, String city, String zipCode, String country, LocalDateTime availabilityDate, LocalDateTime expirationDate, com.soat.anti_gaspi.domain.Status status) {
         this.naturalId = naturalId;
         this.title = title;
         this.description = description;
@@ -195,7 +214,7 @@ public class OfferEntity {
             return this;
         }
 
-        public OfferEntityBuilder status(com.soat.anti_gaspi.domain.Status  status) {
+        public OfferEntityBuilder status(com.soat.anti_gaspi.domain.Status status) {
             this.status = status;
             return this;
         }

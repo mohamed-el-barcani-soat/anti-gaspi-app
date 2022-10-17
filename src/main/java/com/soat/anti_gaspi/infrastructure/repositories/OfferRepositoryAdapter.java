@@ -2,18 +2,15 @@ package com.soat.anti_gaspi.infrastructure.repositories;
 
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.Offers;
+import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
-import java.util.Set;
-
-
 @Component
 @AllArgsConstructor
-public class OffersAdapter implements Offers {
+public class OfferRepositoryAdapter implements OfferRepository {
 
     private final OfferJpaRepository offerRepository;
     private final OfferMapper offerMapper;
@@ -25,7 +22,7 @@ public class OffersAdapter implements Offers {
     }
 
     @Override
-    public OfferId update(Offer entity) {
+    public Offer update(Offer entity) { //TODO RETURN OBJECT
         return null;
     }
 
@@ -36,11 +33,6 @@ public class OffersAdapter implements Offers {
 
     @Override
     public Offer find(OfferId offerId) {
-        return null;
-    }
-
-    @Override
-    public Set<Offer> findAll() {
         return null;
     }
 }
