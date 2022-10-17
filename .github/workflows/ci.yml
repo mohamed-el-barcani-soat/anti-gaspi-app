@@ -9,6 +9,7 @@ on:
 
 env: 
   AZURE_WEBAPP_NAME: 'app-soat-bc22-java1-dev-fr'
+  MM_AZURE_WEBAPP_NAME : 'app-soat-bc22-meb-dev-fr'
 
 jobs:
   build:
@@ -71,7 +72,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{env.AZURE_WEBAPP_NAME }}
+          app-name: ${{env.MM_AZURE_WEBAPP_NAME }}
           slot-name: 'production'
           publish-profile: ${{ secrets.MM_AZURE_WEBAPP_PUBLISH_PROFILE }} 
           package: '*.jar'
