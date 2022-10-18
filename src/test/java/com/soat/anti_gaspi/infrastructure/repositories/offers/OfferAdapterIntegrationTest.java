@@ -7,6 +7,7 @@ import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.model.OfferEntity;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,8 +34,13 @@ class OfferAdapterIntegrationTest {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-    private final OfferMapper offerMapper = new OfferMapper();
 
+    @BeforeEach
+    public void clean() {
+        OfferHelper.DropOffers(jdbcTemplate);
+    }
+
+    private final OfferMapper offerMapper = new OfferMapper();
 
     @Test
     void should_create() {
@@ -71,7 +77,7 @@ class OfferAdapterIntegrationTest {
         assertThat(result.getCountry()).isEqualTo(validOffer.getAddress().getCountry());
         assertThat(result.getAvailabilityDate().toLocalDate()).isEqualTo(validOffer.getAvailabilityDate().toLocalDate());
         assertThat(result.getExpirationDate().toLocalDate()).isEqualTo(validOffer.getExpirationDate().toLocalDate());
-        assertThat(result.getStatus()).isEqualTo(validOffer.getStatus());
+        assertThat(result.getStatus()).isEqualTo(validOffer.getStatus().getValue());
     }
 
     @Test
@@ -124,7 +130,7 @@ class OfferAdapterIntegrationTest {
         assertThat(modifiedOfferEntity.getCountry()).isEqualTo(modifiedOffer.getAddress().getCountry());
         assertThat(modifiedOfferEntity.getAvailabilityDate().toLocalDate()).isEqualTo(modifiedOffer.getAvailabilityDate().toLocalDate());
         assertThat(modifiedOfferEntity.getExpirationDate().toLocalDate()).isEqualTo(modifiedOffer.getExpirationDate().toLocalDate());
-        assertThat(modifiedOfferEntity.getStatus()).isEqualTo(modifiedOffer.getStatus());
+        assertThat(modifiedOfferEntity.getStatus()).isEqualTo(modifiedOffer.getStatus().getValue());
     }
 
 }

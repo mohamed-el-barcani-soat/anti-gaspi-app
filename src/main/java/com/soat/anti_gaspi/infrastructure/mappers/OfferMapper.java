@@ -10,19 +10,19 @@ import java.time.OffsetDateTime;
 public class OfferMapper {
 
         public OfferEntity toEntity(Offer offer) {
-            return OfferEntity.OfferEntityBuilder.builder()
+            return OfferEntity.builder()
                     .naturalId(offer.getOfferId().value())
                     .title(offer.getTitle())
                     .description(offer.getDescription())
                     .email(offer.getUser().getEmail().getValue())
-                    .numberAddress(String.valueOf(offer.getAddress().getNumber()))
-                    .streetAddress(offer.getAddress().getStreet())
-                    .cityAddress(offer.getAddress().getCity())
-                    .zipCodeAddress(offer.getAddress().getZipCode())
+                    .number(String.valueOf(offer.getAddress().getNumber()))
+                    .street(offer.getAddress().getStreet())
+                    .city(offer.getAddress().getCity())
+                    .zipCode(offer.getAddress().getZipCode())
                     .country(offer.getAddress().getCountry())
                     .availabilityDate(offer.getAvailabilityDate().toLocalDateTime())
                     .expirationDate(offer.getExpirationDate().toLocalDateTime())
-                    .status(offer.getStatus())
+                    .status(offer.getStatus().getValue())
                     .build();
         }
 
@@ -43,7 +43,7 @@ public class OfferMapper {
                                 .build())
                 .availabilityDate(offerEntity.getAvailabilityDate().atOffset(OffsetDateTime.now().getOffset()))
                 .expirationDate(offerEntity.getExpirationDate().atOffset(OffsetDateTime.now().getOffset()))
-                .status(Status.from(offerEntity.getStatus().name()))
+                .status(Status.from(offerEntity.getStatus()))
                 .build();
     }
 }

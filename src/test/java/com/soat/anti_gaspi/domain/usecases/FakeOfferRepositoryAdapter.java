@@ -4,7 +4,7 @@ import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.OfferRepository;
 
-import java.util.Set;
+import java.util.Optional;
 
 public class FakeOfferRepositoryAdapter implements OfferRepository {
 
@@ -14,7 +14,7 @@ public class FakeOfferRepositoryAdapter implements OfferRepository {
         return offerId;    }
 
     @Override
-    public Offer update(Offer entity) {
+    public Optional<Offer> update(Offer entity) {
         return null;
     }
 
