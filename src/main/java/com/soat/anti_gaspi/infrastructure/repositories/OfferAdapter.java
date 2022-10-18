@@ -35,12 +35,14 @@ public class OfferAdapter implements OfferRepository {
 
     @Override
     public void delete(final Offer offer) {
-
+        offerRepository
+                .findByNaturalId(offer.getOfferId().value())
+                .ifPresent(offerRepository::delete);
     }
 
     @Override
-    public Offer find(OfferId offerId) {
-        return null;
+    public Optional<Offer> find(OfferId offerId) {
+        return offerRepository.findByNaturalId(offerId.value()).map(offerMapper::toOffer);
     }
 
     private OfferEntity mergeEntity(final Offer offer, final OfferEntity entity) {

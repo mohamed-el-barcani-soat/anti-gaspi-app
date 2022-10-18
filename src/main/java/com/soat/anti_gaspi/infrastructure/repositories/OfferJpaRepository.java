@@ -16,6 +16,5 @@ public interface OfferJpaRepository extends JpaRepository<OfferEntity, String> {
     OfferEntity save(OfferEntity offerEntity);
     Page<OfferEntity> findAll(Pageable pageable);
     Page<OfferEntity> findAllByStatus(Status status, Pageable pageable);
-
     Optional<OfferEntity> findByNaturalId(String naturalId);
 }

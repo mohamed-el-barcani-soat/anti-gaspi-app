@@ -24,7 +24,7 @@ public class FakeOfferRepositoryAdapter implements OfferRepository {
     }
 
     @Override
-    public Offer find(OfferId offerId) {
+    public Optional<Offer> find(OfferId offerId) {
         return null;
     }
 }

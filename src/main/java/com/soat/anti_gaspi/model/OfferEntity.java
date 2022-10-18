@@ -39,7 +39,7 @@ public class OfferEntity {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "zip_code")
+    @Column(name = "zipcode")
     private String zipCode;
 
     @Column(name = "country")

@@ -1,13 +1,13 @@
-create table OFFER
+create table if not exists OFFER
 (
-    id               varchar PRIMARY KEY,
-    naturalId        varchar UNIQUE NOT NULL,
+    id               varchar(200) PRIMARY KEY,
+    natural_id       varchar(200) UNIQUE NOT NULL,
     title            varchar(200),
     description      varchar(200),
     email            varchar(200),
     street           varchar(200),
-    zipCode          varchar(5),
+    zipcode          varchar(5),
     country          varchar(150),
-    availabilityDate date,
-    expirationDate   date
+    availability_date date,
+    expiration_date   date
 );

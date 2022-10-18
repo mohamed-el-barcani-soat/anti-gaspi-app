@@ -10,21 +10,23 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-/*@Sql({
+@Sql({
         "classpath:sql_scripts/offer.sql"
-}) */
-// TODO precise sql files instead of relying on spring natural introspection
+})
 @SpringBootTest
 class OfferAdapterIntegrationTest {
 
@@ -132,5 +134,90 @@ class OfferAdapterIntegrationTest {
         assertThat(modifiedOfferEntity.getExpirationDate().toLocalDate()).isEqualTo(modifiedOffer.getExpirationDate().toLocalDate());
         assertThat(modifiedOfferEntity.getStatus()).isEqualTo(modifiedOffer.getStatus().getValue());
     }
+
+    @Test
+    void should_return_empty_on_uncreated_offer_when_update() {
+        // Given
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
+        Clock clock = ClockHelper.getClock();
+
+        var modifiedOffer = OfferHelper.getOffer("id", "emailmodifié@email.fr", "1 bis", OffsetDateTime.now(clock), OffsetDateTime.now(clock), Status.PENDING);
+
+        // When
+        var offer = offersAdapter.update(modifiedOffer);
+
+        // Then
+        assertThat(offer).isEqualTo(Optional.empty());
+    }
+
+
+    @Test
+    void should_find_offer_on_present_offer() {
+        // Given
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
+        Clock clock = ClockHelper.getClock();
+        var id = "id";
+        var startOffer = OffsetDateTime.now(clock);
+        var endOffer = OffsetDateTime.now(clock);
+        OfferHelper.insertOffer(jdbcTemplate, OfferHelper.getOfferAsSqlMapProperties(id, "email@email.fr", "1", startOffer, endOffer, Status.PENDING));
+
+
+        // When
+        var offer = offersAdapter.find(new OfferId(id));
+
+        // Then
+        assertThat(offer).isPresent();
+
+        var offerFound = offer.get();
+        assertThat(offerFound.getTitle()).isEqualTo(null);
+        assertThat(offerFound.getDescription()).isEqualTo(null);
+        assertThat(offerFound.getUser().getEmail().getValue()).isEqualTo("email@email.fr");
+        assertThat(offerFound.getAddress().getNumber()).isEqualTo("1");
+        assertThat(offerFound.getAddress().getStreet()).isEqualTo(null);
+        assertThat(offerFound.getAddress().getCity()).isEqualTo(null);
+        assertThat(offerFound.getAddress().getZipCode()).isEqualTo(null);
+        assertThat(offerFound.getAddress().getCountry()).isEqualTo(null);
+        assertThat(offerFound.getAvailabilityDate().toLocalDate()).isEqualTo(startOffer.toLocalDate());
+        assertThat(offerFound.getExpirationDate().toLocalDate()).isEqualTo(endOffer.toLocalDate());
+        assertThat(offerFound.getStatus()).isEqualTo(Status.PENDING);
+    }
+
+    @Test
+    void should_return_empty_on_not_found() {
+        // Given
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
+
+        // When
+        var offer = offersAdapter.find(new OfferId("id"));
+
+        // Then
+        assertThat(offer).isNotPresent();
+    }
+
+    @Test
+    void should_delete() {
+        // Given
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
+        Clock clock = ClockHelper.getClock();
+        var id = "id";
+        var startOffer = OffsetDateTime.now(clock);
+        var endOffer = OffsetDateTime.now(clock);
+        OfferHelper.insertOffer(jdbcTemplate, OfferHelper.getOfferAsSqlMapProperties(id, "email@email.fr", "1", startOffer, endOffer, Status.PENDING));
+
+        var offerToDelete = OfferHelper.getOffer(id, "email@email.fr", "1", startOffer, endOffer, Status.PENDING);
+
+        // When
+        offersAdapter.delete(offerToDelete);
+
+        // Then
+        var offersById = OfferHelper
+                .getOffersEntity("select * from offer where natural_id = :id",
+                        new MapSqlParameterSource("id", "id"),
+                        jdbcTemplate);
+
+        assertThat(offersById.size()).isEqualTo(0);
+    }
+
+
 
 }

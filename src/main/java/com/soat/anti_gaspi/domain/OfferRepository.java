@@ -7,5 +7,5 @@ public interface OfferRepository  {
     OfferId create(Offer entity);
     Optional<Offer> update(Offer entity);
     void delete(Offer entity);
-    Offer find(OfferId offerId);
+    Optional<Offer> find(OfferId offerId);
 }

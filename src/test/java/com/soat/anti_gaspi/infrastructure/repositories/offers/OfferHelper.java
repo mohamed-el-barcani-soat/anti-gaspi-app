@@ -53,10 +53,10 @@ public class OfferHelper {
                                 .country(resultSet.getString("country"))
                                 .number(resultSet.getString("number"))
                                 .street(resultSet.getString("street"))
-                                .zipCode(resultSet.getString("zip_code"))
+                                .zipCode(resultSet.getString("zipcode"))
                                 .availabilityDate(resultSet.getDate("availability_date").toLocalDate().atTime(0, 0))
                                 .expirationDate(resultSet.getDate("expiration_date").toLocalDate().atTime(0, 0))
-                                .status(StatusMapper.map(resultSet.getString("status")).getValue())
+                                .status(resultSet.getString("status"))
                                 .build()
         );
     }
@@ -70,6 +70,6 @@ public class OfferHelper {
     }
 
     public static void DropOffers(NamedParameterJdbcTemplate jdbcTemplate) {
-        jdbcTemplate.update("delete from offer", new MapSqlParameterSource());
+        jdbcTemplate.update("delete from OFFER", new MapSqlParameterSource());
     }
 }
