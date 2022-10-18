@@ -167,7 +167,7 @@ public class PublicationAnnonceATest extends ATest {
                 .extract()
                 .as(UUID.class);
 
-        var savedOffer = offerRepository.findById(id).orElse(null);
+        var savedOffer = offerRepository.findById(id.toString()).orElse(null);
         assertThat(savedOffer).isNotNull();
         assertThat(savedOffer).usingRecursiveComparison()
                 .ignoringFields("id")
@@ -254,7 +254,7 @@ public class PublicationAnnonceATest extends ATest {
         response.then()
                 .statusCode(HttpStatus.SC_ACCEPTED);
 
-        var updatedOffer = offerRepository.findById(this.id).orElse(null);
+        var updatedOffer = offerRepository.findById(this.id.toString()).orElse(null);
         assertThat(updatedOffer).isNotNull();
 //        assertThat(updatedOffer.getStatus()).isEqualTo(status);
     }

@@ -7,25 +7,6 @@ import java.time.LocalDateTime;
 
 @Entity(name = "offer")//todo table
 public class OfferEntity {
-    @Override
-    public String toString() {
-        return "OfferEntity{" +
-                "id='" + id + '\'' +
-                ", naturalId='" + naturalId + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", email='" + email + '\'' +
-                ", number='" + number + '\'' +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", country='" + country + '\'' +
-                ", availabilityDate=" + availabilityDate +
-                ", expirationDate=" + expirationDate +
-                ", status=" + status +
-                '}';
-    }
-
     protected OfferEntity() {
     }
 

@@ -12,9 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-// TODO: Replace UUID by a string
-public interface OfferJpaRepository extends JpaRepository<OfferEntity, UUID> {
-    //TODO: Delete unused methosds
+public interface OfferJpaRepository extends JpaRepository<OfferEntity, String> {
     OfferEntity save(OfferEntity offerEntity);
     Page<OfferEntity> findAll(Pageable pageable);
     Page<OfferEntity> findAllByStatus(Status status, Pageable pageable);

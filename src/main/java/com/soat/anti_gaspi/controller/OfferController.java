@@ -1,24 +1,12 @@
 package com.soat.anti_gaspi.controller;
 
-import java.time.Clock;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.BiPredicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
 import com.soat.anti_gaspi.application.OfferMapper;
-import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
+import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
 import com.soat.anti_gaspi.model.OfferEntity;
 import com.soat.anti_gaspi.model.Status;
-import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +18,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Clock;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiPredicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Add validator ?
 @Slf4j
@@ -62,6 +60,8 @@ public class OfferController {
         // Use validator of spring instead of mapper one ?
         var of = offerMapper.map(offerDto);
 
+        var offerId = createOffer.create(of);
+
         return new ResponseEntity<>(UUID.randomUUID(), HttpStatus.CREATED);
     }
 
@@ -75,7 +75,7 @@ public class OfferController {
 
     @PostMapping("/{id}/confirm")
     public ResponseEntity<Void> confirm(@PathVariable("id") UUID uuid) {
-        Optional<OfferEntity> maybeOffer = offerRepository.findById(uuid);
+        Optional<OfferEntity> maybeOffer = offerRepository.findById(uuid.toString());
         AtomicReference<HttpStatus> status = new AtomicReference<>(HttpStatus.NOT_FOUND);
 //        maybeOffer.ifPresent(offerEntity -> {
 //            offerEntity.setStatus(Status.PUBLISHED);
@@ -109,7 +109,7 @@ public class OfferController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SavedOffer> findById(@PathVariable("id") UUID id) {
-        Optional<SavedOffer> optionalOffer = offerRepository.findById(id)
+        Optional<SavedOffer> optionalOffer = offerRepository.findById(id.toString())
                 .map(this::toOfferSavedJson);
 
         return optionalOffer
@@ -119,7 +119,7 @@ public class OfferController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
-        offerRepository.deleteById(id);
+        offerRepository.deleteById(id.toString());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -141,7 +141,7 @@ public class OfferController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         final Contact savedContact = contactRepository.save(contact);
-        final OfferEntity offerEntity = offerRepository.findById(id).orElse(null);
+        final OfferEntity offerEntity = offerRepository.findById(id.toString()).orElse(null);
         smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", null, "toto");
         return new ResponseEntity<>(savedContact.getId(), HttpStatus.CREATED);
     }

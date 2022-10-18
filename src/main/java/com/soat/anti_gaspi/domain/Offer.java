@@ -61,7 +61,7 @@ public class Offer implements DomainEntity {
         return new OfferBuilder();
     }
 
-    public void validate() {
+    public void validateCreation() {
 
     }
 

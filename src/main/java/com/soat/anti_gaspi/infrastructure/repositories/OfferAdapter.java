@@ -10,29 +10,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class OfferRepositoryAdapter implements OfferRepository {
+public class OfferAdapter implements OfferRepository {
 
     private final OfferJpaRepository offerRepository;
     private final OfferMapper offerMapper;
 
     @Override
     public OfferId create(Offer offer) {
-        var offerEntity = offerMapper.toEntity(offer);
-        return offerMapper.toOffer(offerRepository.save(offerEntity)).getOfferId();
+        return this.save(offer).getOfferId();
     }
 
     @Override
-    public Offer update(Offer entity) { //TODO RETURN OBJECT
-        return null;
+    public Offer update(Offer offer) {
+        return this.save(offer);
     }
 
     @Override
-    public void delete(Offer entity) {
+    public void delete(Offer offer) {
 
     }
 
     @Override
     public Offer find(OfferId offerId) {
         return null;
+    }
+
+    private Offer save(Offer offer) {
+        var offerEntity = offerRepository.save(offerMapper.toEntity(offer));
+        return offerMapper.toOffer(offerEntity);
     }
 }

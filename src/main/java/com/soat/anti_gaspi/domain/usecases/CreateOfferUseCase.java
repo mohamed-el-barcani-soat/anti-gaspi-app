@@ -11,7 +11,7 @@ public class CreateOfferUseCase {
     }
 
     public String create(final Offer offer) {
-        offer.validate();
+        offer.validateCreation();
         var offerId = offerRepository.create(offer);
         return offerId.value();
     }
