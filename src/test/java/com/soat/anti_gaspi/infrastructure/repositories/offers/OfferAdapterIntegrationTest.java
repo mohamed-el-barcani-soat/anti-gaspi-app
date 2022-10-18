@@ -1,20 +1,23 @@
 package com.soat.anti_gaspi.infrastructure.repositories.offers;
 
-import com.soat.anti_gaspi.domain.*;
+import com.soat.anti_gaspi.domain.Offer;
+import com.soat.anti_gaspi.domain.OfferId;
+import com.soat.anti_gaspi.domain.Status;
+import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.infrastructure.repositories.ClockHelper;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferAdapter;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
-import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.model.OfferEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.Clock;
@@ -24,10 +27,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@DataJpaTest
 @Sql({
         "classpath:sql_scripts/offer.sql"
 })
-@SpringBootTest
+@ActiveProfiles("test")
 class OfferAdapterIntegrationTest {
 
 
@@ -91,7 +95,7 @@ class OfferAdapterIntegrationTest {
 
 
         //When
-        var offerId = offersAdapter.create(validOffer);//TODO DISTINGUER CREATE UPDATE
+        var offerId = offersAdapter.create(validOffer);
 
         // Then
         var dataIntegrityViolationException = Assertions.assertThrows(DataIntegrityViolationException.class, () -> {

@@ -7,7 +7,7 @@ create table if not exists OFFER
     email             varchar(200),
     street            varchar(200),
     zipcode           varchar(5),
-    city              varchar(200),
+    city              varchar(500),
     country           varchar(150),
     availability_date date,
     expiration_date   date

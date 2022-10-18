@@ -7,6 +7,7 @@ import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.model.OfferEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,12 +20,14 @@ public class OfferAdapter implements OfferRepository {
     private final OfferMapper offerMapper;
 
     @Override
+    @Transactional
     public OfferId create(final Offer offer) {
         var offerEntity = offerRepository.save(offerMapper.toEntity(offer));
         return offerMapper.toOffer(offerEntity).getOfferId();
     }
 
     @Override
+    @Transactional
     public Optional<Offer> update(final Offer offer) {
         return offerRepository.findByNaturalId(offer.getOfferId().value())
                 .map((entity -> {
@@ -34,6 +37,7 @@ public class OfferAdapter implements OfferRepository {
     }
 
     @Override
+    @Transactional
     public void delete(final Offer offer) {
         offerRepository
                 .findByNaturalId(offer.getOfferId().value())
