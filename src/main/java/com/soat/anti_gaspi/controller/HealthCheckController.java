@@ -15,6 +15,6 @@ public class HealthCheckController {
 
     @GetMapping
     public ResponseEntity<String> getPublishedOffers() {
-        return ResponseEntity.of(Optional.of("I'm alive"));
+        return ResponseEntity.of(Optional.of("I'm alive and MM as well"));
     }
 }
