@@ -13,5 +13,7 @@ class HashSHA256GeneratorServiceTest {
         HashSHA256GeneratorService hashSHA256GeneratorService = new HashSHA256GeneratorService();
         var hash = hashSHA256GeneratorService.generate(Offer.builder().offerId(new OfferId("ID")).build());
         System.out.println(hash);
+
+        System.out.println(hash.length());
     }
 }
