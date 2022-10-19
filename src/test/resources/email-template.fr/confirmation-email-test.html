@@ -36,25 +36,25 @@
 <body>
 <div>
     <div>
-        <p>Bonjour <span th:utext="${username}"></span>,</p>
+        <p>Bonjour <span>an username</span>,</p>
         <p>Voici le résumé de votre annonce Anti Gaspi</p>
     </div>
     <div>
-        <p>Titre : <span class="text-bold" th:utext="${title}"></span></p>
-        <p>Adresse : <span class="text-bold" th:utext="${address}"></span></p>
-        <p>Description : <span th:utext="${description}"></span></p>
+        <p>Titre : <span class="text-bold">a title</span></p>
+        <p>Adresse : <span class="text-bold">an address</span></p>
+        <p>Description : <span>a description</span></p>
     </div>
 
     <div>
-        <p>Votre annonce sera disponible du : <span class="text-bold" th:utext="${availabilityDate}"></span> au <span
-                class="text-bold" th:utext="${expirationDate}"></span></p>
+        <p>Votre annonce sera disponible du : <span class="text-bold">01/01/01</span> au <span
+                class="text-bold">02/02/02</span></p>
     </div>
 
     <div class="button-container">
-        <a th:href="@{${validateLink}}" target="_blank">
+        <a href="http://validation.com" target="_blank">
             <button type="button" class="validation-button">Valider l'annonce</button>
         </a>
-        <a th:href="@{${deleteLink}}" target="_blank">
+        <a href="" target="_blank">
             <button type="button" class="deletion-button">Supprimer l'annonce</button>
         </a>
     </div>

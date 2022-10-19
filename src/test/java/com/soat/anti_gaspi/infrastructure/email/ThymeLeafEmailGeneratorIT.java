@@ -1,103 +1,48 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+@Disabled
 @SpringBootTest
 class ThymeLeafEmailGeneratorIT {
 
     @Autowired
-    private SpringTemplateEngine templateEngine;
-
-    @Autowired
-    private EmailThymeLeafContextFactory emailThymeLeafContextFactory;
-
     private ThymeLeafEmailGenerator htmlEmailGenerator;
 
-    // TODO remplacer le fichier dans test
-    @BeforeEach
-    void setup() {
-        // TODO authowired ça
-        htmlEmailGenerator = new ThymeLeafEmailGenerator(templateEngine, emailThymeLeafContextFactory);
-    }
-// TODO elaborer le test
     @Test
-    void should_process_with_template_file_name_and_context() {
+    void should_process_with_template_file_name_and_context() throws IOException, NullOfferConfirmationException {
         var parameters = new OfferConfirmationParameters(
                 "a title",
                 "a description",
-                "http://validation.com",
-                "http/deletion.com"
+                "an username",
+                "an address",
+                "01/01/01",
+                "02/02/02",
+                "oiç8kjn"
         );
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
-//TODO mettre ça dans un fichier
-        var expectedOutput = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Email</title>
-                    <style>
-                                
-                        .validation-button, .deletion-button {
-                            margin: 10px;
-                            color: white;
-                            border: none;
-                            padding: 10px;
-                        }
-                        .validation-button {
-                            background-color: deepskyblue;
-                        }
-                                
-                        .deletion-button {
-                            background-color: indianred;
-                        }
-                                
-                        button{
-                            ba: red;
-                        }
-                        .button-container {
-                            margin: 10px;
-                        }
-                                
-                        .text-bold {
-                            font-weight: bold;
-                        }
-                    </style>
-                </head>
-                <body>
-                <div>
-                    <div>
-                        <p>Bonjour <span ></span>,</p>
-                        <p>Voici le résumé de votre annonce Anti Gaspi</p>
-                    </div>
-                    <div>
-                        <p>Titre : <span class="text-bold">title1</span></p>
-                        <p>Description : <span>description1</span></p>
-                    </div>
-                                
-                    <div class="button-container">
-                        <a href="http://localhost:8080/validate/1">
-                            <button type="button" class="validation-button">Valider l'annonce</button>
-                        </a>
-                        <a href="">
-                            <button type="button" class="deletion-button">Supprimer l'annonce</button>
-                        </a>
-                    </div>
-                                
-                    <div>
-                        <p>Cordialement,</p>
-                        <p>L'équipe Anti Gaspi</p>
-                    </div>
-                </div>
-                                
-                </body>
-                </html>""";
-        assertThat(result).isEqualTo(expectedOutput);
+        // TODO html shall be validated without using a write file. Better use an html parser validator (lib ?)
+
+        File file = ResourceUtils.getFile("classpath:email-template.fr/confirmation-email-test.html");
+        String expected = Files.readString(file.toPath());
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    void should_throw_MissingOffer_when_offer_confirmation_is_null() {
+        assertThatThrownBy(() -> htmlEmailGenerator.generateEmailFromTemplate(null))
+                .isExactlyInstanceOf(NullOfferConfirmationException.class);
     }
 }

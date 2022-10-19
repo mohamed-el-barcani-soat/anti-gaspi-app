@@ -1,5 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
 
@@ -14,8 +15,7 @@ public class ThymeLeafEmailGenerator implements EmailGenerator {
         this.emailThymeLeafContextFactory = emailThymeLeafContextFactory;
     }
 
-    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) {
-
+    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NullOfferConfirmationException {
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 
         return templateEngine.process(TEMPLATE_FILE_NAME, ctx);

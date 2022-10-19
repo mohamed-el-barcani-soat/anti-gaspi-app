@@ -1,10 +1,10 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
@@ -17,6 +17,16 @@ class ThymeLeafEmailGeneratorTest {
 
     private static final String TEMPLATE_FILE_NAME = "confirmation-email-template.html";
     private ThymeLeafEmailGenerator thymeLeafEmailGenerator;
+
+    private OfferConfirmationParameters validOffer = new OfferConfirmationParameters(
+            "t",
+            "d",
+            "u",
+            "a",
+            "01/02/03",
+            "01/02/05",
+            "h"
+    );
 
     @Mock
     private ISpringTemplateEngine templateEngine;
@@ -31,13 +41,15 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_call_factory() {
+    void should_call_factory() throws NullOfferConfirmationException {
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
                 "t",
                 "d",
-                "v",
-                "r"
-
+                "u",
+                "a",
+                "01/02/03",
+                "01/02/05",
+                "h"
         );
         thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
 
@@ -45,37 +57,26 @@ class ThymeLeafEmailGeneratorTest {
     }
 
     @Test
-    void should_call_engine_process() {
+    void should_call_engine_process() throws NullOfferConfirmationException {
         Context ctx = new Context();
 
-        OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
-                "t",
-                "d",
-                "v",
-                "r"
-        );
-        when(emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters)).thenReturn(ctx);
+        when(emailThymeLeafContextFactory.createEmailTemplateContext(validOffer)).thenReturn(ctx);
 
-        thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
+        thymeLeafEmailGenerator.generateEmailFromTemplate(validOffer);
 
         verify(templateEngine, times(1)).process(TEMPLATE_FILE_NAME, ctx);
     }
 
     @Test
-    void should_return_correct_template(){
+    void should_return_correct_template() throws NullOfferConfirmationException {
         Context ctx = new Context();
         var expected = "EMAIL BODY";
 
-        OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
-                "t",
-                "d",
-                "v",
-                "r"
-        );
-        when(emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters)).thenReturn(ctx);
+
+        when(emailThymeLeafContextFactory.createEmailTemplateContext(validOffer)).thenReturn(ctx);
         when(templateEngine.process(TEMPLATE_FILE_NAME, ctx)).thenReturn(expected);
 
-        var result = thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
+        var result = thymeLeafEmailGenerator.generateEmailFromTemplate(validOffer);
 
         assertThat(expected).isEqualTo(result);
     }
