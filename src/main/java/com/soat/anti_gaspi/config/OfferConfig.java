@@ -1,7 +1,7 @@
 package com.soat.anti_gaspi.config;
 
 import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
-import com.soat.anti_gaspi.infrastructure.repositories.OfferAdapter;
+import com.soat.anti_gaspi.infrastructure.repositories.FindOfferAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class OfferConfig {
 
     @Bean
-    CreateOfferUseCase createOfferFactory(OfferAdapter offersRepository) {
+    CreateOfferUseCase createOfferFactory(FindOfferAdapter offersRepository) {
         return new CreateOfferUseCase(offersRepository);
     }
 }

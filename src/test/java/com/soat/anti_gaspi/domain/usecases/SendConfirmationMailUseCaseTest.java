@@ -2,12 +2,12 @@ package com.soat.anti_gaspi.domain.usecases;
 
 
 import com.soat.anti_gaspi.domain.EmailSender;
-import com.soat.anti_gaspi.domain.OfferConfirmationRepository;
+import com.soat.anti_gaspi.domain.FindOfferRepository;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.exception.OfferNotFoundException;
 import com.soat.anti_gaspi.infrastructure.email.EmailGenerator;
 import com.soat.anti_gaspi.infrastructure.email.FakeEmailGenerator;
-import com.soat.anti_gaspi.infrastructure.repositories.email.FakeOfferRepositorySendConfirmationMail;
+import com.soat.anti_gaspi.infrastructure.repositories.email.FakeFindOfferRepositorySendMail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,13 +23,13 @@ class SendConfirmationMailUseCaseTest {
     private SendConfirmationMailUseCase sendConfirmationMailUseCase;
     EmailGenerator fakeEmailGenerator = new FakeEmailGenerator();
 
-    OfferConfirmationRepository fakeOfferRepository;
+    FindOfferRepository fakeOfferRepository;
     @Mock
     EmailSender mockEmailSender;
 
     @BeforeEach
     void setup() {
-        fakeOfferRepository = new FakeOfferRepositorySendConfirmationMail();
+        fakeOfferRepository = new FakeFindOfferRepositorySendMail();
         sendConfirmationMailUseCase = new SendConfirmationMailUseCase(fakeOfferRepository, fakeEmailGenerator, mockEmailSender);
     }
 

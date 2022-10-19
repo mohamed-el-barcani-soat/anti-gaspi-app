@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.config;
 
-import com.soat.anti_gaspi.domain.OfferConfirmationRepository;
+import com.soat.anti_gaspi.domain.FindOfferRepository;
 import com.soat.anti_gaspi.domain.usecases.SendConfirmationMailUseCase;
 import com.soat.anti_gaspi.infrastructure.email.ThymeLeafEmailGenerator;
 import com.soat.anti_gaspi.infrastructure.mail_sender.GmailEmailSender;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class MailSenderConfig {
 
     @Bean
-    SendConfirmationMailUseCase sendConfirmationMailUseCase(OfferConfirmationRepository offerConfirmationRepository, ThymeLeafEmailGenerator emailGenerator, GmailEmailSender mailSender) {
-        return new SendConfirmationMailUseCase(offerConfirmationRepository, emailGenerator, mailSender);
+    SendConfirmationMailUseCase sendConfirmationMailUseCase(FindOfferRepository findOfferRepository, ThymeLeafEmailGenerator emailGenerator, GmailEmailSender mailSender) {
+        return new SendConfirmationMailUseCase(findOfferRepository, emailGenerator, mailSender);
     }
 }
