@@ -1,4 +1,4 @@
-package com.soat.anti_gaspi.domain.usecases;
+package com.soat.anti_gaspi.infrastructure.email;
 
 import com.soat.anti_gaspi.infrastructure.email.EmailGenerator;
 import com.soat.anti_gaspi.infrastructure.email.OfferConfirmationParameters;
