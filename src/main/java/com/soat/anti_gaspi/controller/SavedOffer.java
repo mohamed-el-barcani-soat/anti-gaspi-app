@@ -1,8 +1,19 @@
 package com.soat.anti_gaspi.controller;
 
-import java.time.LocalDate;
-import java.util.UUID;
+import lombok.Builder;
+import lombok.Data;
 
-public record SavedOffer(UUID id, String companyName, String title, String description, String email, String address, LocalDate availabilityDate, LocalDate expirationDate) {
+import java.time.LocalDateTime;
 
+@Data
+@Builder
+//TODO rename moi ca
+public class SavedOffer {
+    String offerId;
+    String title;
+    String description;
+    String username;
+    String email;
+    String address;
+    LocalDateTime expirationDate;
 }
