@@ -56,7 +56,6 @@ public class Offer implements DomainEntity {
         return offerId;
     }
 
-
     public static OfferBuilder builder() {
         return new OfferBuilder();
     }
@@ -120,6 +119,7 @@ public class Offer implements DomainEntity {
             this.expirationDate = expirationDate;
             return this;
         }
+
 
         public Offer build() {
             return new Offer(offerId, title, description, user, address, availabilityDate, expirationDate, status);
