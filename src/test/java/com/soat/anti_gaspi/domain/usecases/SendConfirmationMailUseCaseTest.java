@@ -2,8 +2,8 @@ package com.soat.anti_gaspi.domain.usecases;
 
 
 import com.soat.anti_gaspi.domain.EmailSender;
+import com.soat.anti_gaspi.domain.OfferConfirmationRepository;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.domain.exception.OfferNotFoundException;
 import com.soat.anti_gaspi.infrastructure.email.EmailGenerator;
 import com.soat.anti_gaspi.infrastructure.email.FakeEmailGenerator;
@@ -23,7 +23,7 @@ class SendConfirmationMailUseCaseTest {
     private SendConfirmationMailUseCase sendConfirmationMailUseCase;
     EmailGenerator fakeEmailGenerator = new FakeEmailGenerator();
 
-    OfferRepository fakeOfferRepository;
+    OfferConfirmationRepository fakeOfferRepository;
     @Mock
     EmailSender mockEmailSender;
 
@@ -40,5 +40,10 @@ class SendConfirmationMailUseCaseTest {
         assertThatThrownBy(() -> sendConfirmationMailUseCase.send("97UHIUG8I7G8G"))
                 .isExactlyInstanceOf(OfferNotFoundException.class)
                 .hasMessage(MessageFormat.format("Offer with id {0} not found", offerId.value()));
+    }
+
+    @Test
+    void should_generate_validation_link(){
+
     }
 }
