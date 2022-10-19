@@ -1,6 +1,5 @@
 package com.soat.anti_gaspi.controller;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

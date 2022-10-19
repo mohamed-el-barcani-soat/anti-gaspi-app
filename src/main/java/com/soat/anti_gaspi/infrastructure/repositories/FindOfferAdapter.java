@@ -1,6 +1,7 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
 import com.soat.anti_gaspi.domain.Offer;
+import com.soat.anti_gaspi.domain.FindOfferRepository;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class OfferAdapter implements OfferRepository {
+public class FindOfferAdapter implements OfferRepository, FindOfferRepository {
 
     private final OfferJpaRepository offerRepository;
     private final OfferMapper offerMapper;
