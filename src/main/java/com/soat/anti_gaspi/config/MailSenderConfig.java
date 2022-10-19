@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class MailSenderConfig {
 
     @Bean
-    SendConfirmationMailUseCase createOfferFactory(ThymeLeafEmailGenerator emailGenerator, GmailEmailSender mailSender) {
+    SendConfirmationMailUseCase sendConfirmationMailUseCase(ThymeLeafEmailGenerator emailGenerator, GmailEmailSender mailSender) {
         return new SendConfirmationMailUseCase(emailGenerator, mailSender);
     }
 }

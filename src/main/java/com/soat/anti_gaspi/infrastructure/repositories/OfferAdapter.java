@@ -27,7 +27,6 @@ public class OfferAdapter implements OfferRepository {
     }
 
     @Override
-    @Transactional
     public Optional<Offer> update(final Offer offer) {
         return offerRepository.findByNaturalId(offer.getOfferId().value())
                 .map((entity -> {
