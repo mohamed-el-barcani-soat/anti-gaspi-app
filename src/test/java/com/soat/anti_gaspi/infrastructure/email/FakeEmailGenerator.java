@@ -1,7 +1,5 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.infrastructure.email.EmailGenerator;
-import com.soat.anti_gaspi.infrastructure.email.OfferConfirmationParameters;
 import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import javassist.NotFoundException;
 
@@ -17,7 +15,8 @@ public class FakeEmailGenerator implements EmailGenerator {
                 MessageFormat.format("address : {} -", offerConfirmationParameters.address()) +
                 MessageFormat.format("availabilityDate : {} -", offerConfirmationParameters.availabilityDate()) +
                 MessageFormat.format("expirationDate : {} -", offerConfirmationParameters.expirationDate()) +
-                MessageFormat.format("hash : {} -", offerConfirmationParameters.hash()) +
+                MessageFormat.format("validateLink : {} -", offerConfirmationParameters.validateLink()) +
+                MessageFormat.format("rejectLink : {} -", offerConfirmationParameters.rejectLink()) +
                 "/div>";
     }
 }
