@@ -1,23 +1,16 @@
-package com.soat.anti_gaspi.application;
+package com.soat.anti_gaspi.infrastructure.service;
 
 import com.soat.anti_gaspi.domain.Offer;
+import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+@Component
 public class HashSHA256GeneratorService implements HashGenerator {
     public static volatile MessageDigest messageDigestSingleton;
     private static final Object syncObject = new Object();
 
-    //public static AtomicReference<MessageDigest> messageDigestSingleton;
-
     static public MessageDigest getInstance() {
-//        try {
-//            messageDigestSingleton.compareAndSet(null, MessageDigest.getInstance("SHA-256"));
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return messageDigestSingleton.get();
 
         if (messageDigestSingleton == null) {
             synchronized(syncObject) {
