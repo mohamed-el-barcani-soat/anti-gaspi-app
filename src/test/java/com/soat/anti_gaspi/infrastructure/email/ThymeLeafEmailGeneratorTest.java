@@ -18,14 +18,15 @@ class ThymeLeafEmailGeneratorTest {
     private static final String TEMPLATE_FILE_NAME = "confirmation-email-template.html";
     private ThymeLeafEmailGenerator thymeLeafEmailGenerator;
 
-    private OfferConfirmationParameters validOffer = new OfferConfirmationParameters(
+    private final OfferConfirmationParameters validOffer = new OfferConfirmationParameters(
             "t",
             "d",
             "u",
             "a",
             "01/02/03",
             "01/02/05",
-            "h"
+            "http://localhost:8080/validate?token=1234",
+            "http://localhost:8080/reject?token=1234"
     );
 
     @Mock
@@ -49,7 +50,8 @@ class ThymeLeafEmailGeneratorTest {
                 "a",
                 "01/02/03",
                 "01/02/05",
-                "h"
+                "http://localhost:8080/validate?token=1234",
+                "http://localhost:8080/reject?token=1234"
         );
         thymeLeafEmailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
 

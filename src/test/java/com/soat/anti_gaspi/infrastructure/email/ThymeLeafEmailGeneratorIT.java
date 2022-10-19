@@ -30,7 +30,8 @@ class ThymeLeafEmailGeneratorIT {
                 "an address",
                 "01/01/01",
                 "02/02/02",
-                "oiç8kjn"
+                "http://localhost:8080/validate?token=1234",
+                "http://localhost:8080/reject?token=1234"
         );
         var result = htmlEmailGenerator.generateEmailFromTemplate(parameters);
         // TODO html shall be validated without using a write file. Better use an html parser validator (lib ?)
