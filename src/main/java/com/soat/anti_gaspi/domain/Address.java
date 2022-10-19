@@ -19,6 +19,26 @@ public class Address {
         return new AddressBuilder();
     }
 
+    public String getNumber() {
+        return numberIndicator.getNumber();
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getZipCode() {
+        return zipcode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
     public static class AddressBuilder {
         private  NumberIndicator numberIndicator;
         private  String street;

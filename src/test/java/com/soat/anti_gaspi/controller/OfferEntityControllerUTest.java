@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.UUID;
 
 import com.dumbster.smtp.SimpleSmtpServer;
+import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.NotificationException;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
@@ -23,8 +24,9 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.http.HttpStatus.*;
 
+// TODO: Rename this class to OfferControllerUTest
 @ExtendWith(MockitoExtension.class)
-class OfferControllerUTest {
+class OfferEntityControllerUTest {
 
     private OfferController offerController;
 
@@ -37,6 +39,9 @@ class OfferControllerUTest {
     @Mock
     private EmailService smailService;
 
+    @Mock
+    private CreateOfferUseCase createOffer;
+
     private final Clock clock = Clock.fixed(LocalDate.parse("2022-07-28").atStartOfDay(ZoneId.systemDefault()).toInstant(), ZoneId.of("UTC"));;
 
 
@@ -45,7 +50,7 @@ class OfferControllerUTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        offerController = new OfferController(smailService, offerRepository, contactRepository, clock);
+        offerController = new OfferController(smailService, offerRepository, contactRepository, clock, createOffer);
         mailServer = SimpleSmtpServer.start(SMTP_PORT);
     }
 
