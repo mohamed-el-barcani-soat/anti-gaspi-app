@@ -58,7 +58,6 @@ public class OfferAdapter implements OfferRepository {
                 .description(offer.getDescription())
                 .expirationDate(offer.getExpirationDate().toLocalDateTime())
                 .title(offer.getTitle())
-                .number(offer.getAddress().getNumber())
                 .status(offer.getStatus().getValue())
                 .city(offer.getAddress().getCity())
                 .street(offer.getAddress().getStreet())

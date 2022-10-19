@@ -21,6 +21,10 @@ public class User {
         return new UserBuilder();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public static class UserBuilder {
         private Email email;
         private String username;

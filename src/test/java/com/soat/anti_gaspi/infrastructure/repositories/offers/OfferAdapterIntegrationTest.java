@@ -71,7 +71,6 @@ class OfferAdapterIntegrationTest {
         assertThat(result.getTitle()).isEqualTo(validOffer.getTitle());
         assertThat(result.getDescription()).isEqualTo(validOffer.getDescription());
         assertThat(result.getEmail()).isEqualTo(validOffer.getUser().getEmail().getValue());
-        assertThat(result.getNumber()).isEqualTo(validOffer.getAddress().getNumber());
         assertThat(result.getStreet()).isEqualTo(validOffer.getAddress().getStreet());
         assertThat(result.getCity()).isEqualTo(validOffer.getAddress().getCity());
         assertThat(result.getZipCode()).isEqualTo(validOffer.getAddress().getZipCode());
@@ -124,7 +123,6 @@ class OfferAdapterIntegrationTest {
         assertThat(modifiedOfferEntity.getTitle()).isEqualTo(modifiedOffer.getTitle());
         assertThat(modifiedOfferEntity.getDescription()).isEqualTo(modifiedOffer.getDescription());
         assertThat(modifiedOfferEntity.getEmail()).isEqualTo(modifiedOffer.getUser().getEmail().getValue());
-        assertThat(modifiedOfferEntity.getNumber()).isEqualTo(modifiedOffer.getAddress().getNumber());
         assertThat(modifiedOfferEntity.getStreet()).isEqualTo(modifiedOffer.getAddress().getStreet());
         assertThat(modifiedOfferEntity.getCity()).isEqualTo(modifiedOffer.getAddress().getCity());
         assertThat(modifiedOfferEntity.getZipCode()).isEqualTo(modifiedOffer.getAddress().getZipCode());
@@ -171,7 +169,6 @@ class OfferAdapterIntegrationTest {
         assertThat(offerFound.getTitle()).isEqualTo(null);
         assertThat(offerFound.getDescription()).isEqualTo(null);
         assertThat(offerFound.getUser().getEmail().getValue()).isEqualTo("email@email.fr");
-        assertThat(offerFound.getAddress().getNumber()).isEqualTo("1");
         assertThat(offerFound.getAddress().getStreet()).isEqualTo(null);
         assertThat(offerFound.getAddress().getCity()).isEqualTo(null);
         assertThat(offerFound.getAddress().getZipCode()).isEqualTo(null);

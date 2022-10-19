@@ -1,7 +1,12 @@
 package com.soat.anti_gaspi.controller;
 
 import com.soat.anti_gaspi.application.OfferMapper;
+import com.soat.anti_gaspi.domain.Address;
+import com.soat.anti_gaspi.domain.Offer;
+import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
+import com.soat.anti_gaspi.domain.usecases.GetOfferUseCase;
+import com.soat.anti_gaspi.domain.usecases.GetPublishedOffersUseCase;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
@@ -41,21 +46,25 @@ public class OfferController {
     private final ContactJpaRepository contactRepository;
     private final Clock clock;
     private final CreateOfferUseCase createOffer;
+    private final GetOfferUseCase getOffer;
+    private final GetPublishedOffersUseCase getPublishedOffers;
 
     private static final String FRENCH_PHONE_NUM_REGEX = "^(?:(?:\\+|00)33|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}$";
 
     private final OfferMapper offerMapper = new OfferMapper();
 
-    public OfferController(@Qualifier("emailService") EmailService smailService, OfferJpaRepository offerRepository, ContactJpaRepository contactRepository, Clock clock, CreateOfferUseCase createOffer) {
+    public OfferController(@Qualifier("emailService") EmailService smailService, OfferJpaRepository offerRepository, ContactJpaRepository contactRepository, Clock clock, CreateOfferUseCase createOffer, GetOfferUseCase getOffer, GetPublishedOffersUseCase getPublishedOffers) {
         this.smailService = smailService;
         this.offerRepository = offerRepository;
         this.contactRepository = contactRepository;
         this.clock = clock;
 
         this.createOffer = createOffer;
+        this.getOffer = getOffer;
+        this.getPublishedOffers = getPublishedOffers;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<UUID> create(@RequestBody @Validated OfferDto offerDto) {
         // Use validator of spring instead of mapper one ?
         var of = offerMapper.map(offerDto);
@@ -95,7 +104,7 @@ public class OfferController {
         Page<OfferEntity> allOffers = offerRepository.findAllByStatus(Status.PUBLISHED, pageable);
 
         List<SavedOffer> savedOffers = allOffers.stream()
-                .map(this::toOfferSavedJson)
+                .map(this::toOfferDto)
                 .toList();
 
         var result = new OfferPage(savedOffers, allOffers.getTotalElements());
@@ -103,16 +112,30 @@ public class OfferController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    private SavedOffer toOfferSavedJson(OfferEntity offerEntity) {
-        return null;
+    private SavedOffer toOfferDto(Offer offer) {
+        return SavedOffer
+                .builder()
+                .offerId(offer.getOfferId().value())
+                .username(offer.getUser().getUsername())
+                .email(offer.getUser().getEmail().getValue())
+                .title(offer.getTitle())
+                .description(offer.getDescription())
+                .expirationDate(offer.getExpirationDate().toLocalDateTime())
+                .address(addressConcatenator(offer.getAddress()))
+
+                .build();
+    }
+
+    private String addressConcatenator(Address address) {
+        return address.getStreet() + ", " + address.getCity() + " " + address.getCountry();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SavedOffer> findById(@PathVariable("id") UUID id) {
-        Optional<SavedOffer> optionalOffer = offerRepository.findById(id.toString())
-                .map(this::toOfferSavedJson);
+    public ResponseEntity<SavedOffer> findById(@PathVariable("id") String id) {
 
-        return optionalOffer
+        var offerId = new OfferId(id);
+        // TODO use ooptional on offerId to extend notation
+        return getOffer.get(offerId).map(this::toOfferDto)
                 .map(offer -> new ResponseEntity<>(offer, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -123,6 +146,7 @@ public class OfferController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 
     @PostMapping("/{id}/contact")
     public ResponseEntity<UUID> createContact(@PathVariable("id") UUID id, @RequestBody ContactToSave contactToSave) {

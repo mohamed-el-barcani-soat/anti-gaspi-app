@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
+import com.soat.anti_gaspi.domain.usecases.GetOfferUseCase;
 import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.model.NotificationException;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
@@ -41,6 +42,8 @@ class OfferEntityControllerUTest {
 
     @Mock
     private CreateOfferUseCase createOffer;
+    private GetOfferUseCase getOffer;
+    private GetOfferUseCase getPublishedOffers;
 
     private final Clock clock = Clock.fixed(LocalDate.parse("2022-07-28").atStartOfDay(ZoneId.systemDefault()).toInstant(), ZoneId.of("UTC"));;
 
@@ -50,7 +53,7 @@ class OfferEntityControllerUTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        offerController = new OfferController(smailService, offerRepository, contactRepository, clock, createOffer);
+        offerController = new OfferController(smailService, offerRepository, contactRepository, clock, createOffer, getOffer, getPublishedOffers);
         mailServer = SimpleSmtpServer.start(SMTP_PORT);
     }
 
