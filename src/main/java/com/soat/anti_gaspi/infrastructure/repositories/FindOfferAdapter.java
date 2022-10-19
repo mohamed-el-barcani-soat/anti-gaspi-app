@@ -1,7 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
 import com.soat.anti_gaspi.domain.Offer;
-import com.soat.anti_gaspi.domain.FindOfferRepository;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
@@ -17,21 +16,21 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FindOfferAdapter implements OfferRepository, FindOfferRepository {
 
-    private final OfferJpaRepository offerRepository;
+    private final OfferJpaRepository jpaRepository;
     private final OfferMapper offerMapper;
 
     @Override
     @Transactional
     public OfferId create(final Offer offer) {
-        var offerEntity = offerRepository.save(offerMapper.toEntity(offer));
+        var offerEntity = jpaRepository.save(offerMapper.toEntity(offer));
         return offerMapper.toOffer(offerEntity).getOfferId();
     }
 
     @Override
     public Optional<Offer> update(final Offer offer) {
-        return offerRepository.findByNaturalId(offer.getOfferId().value())
+        return jpaRepository.findByNaturalId(offer.getOfferId().value())
                 .map((entity -> {
-                    var savedEntity = offerRepository.save(mergeEntity(offer, entity));
+                    var savedEntity = jpaRepository.save(mergeEntity(offer, entity));
                     return offerMapper.toOffer(savedEntity);
                 }));
     }
@@ -39,14 +38,14 @@ public class FindOfferAdapter implements OfferRepository, FindOfferRepository {
     @Override
     @Transactional
     public void delete(final Offer offer) {
-        offerRepository
+        jpaRepository
                 .findByNaturalId(offer.getOfferId().value())
-                .ifPresent(offerRepository::delete);
+                .ifPresent(jpaRepository::delete);
     }
 
     @Override
     public Optional<Offer> find(OfferId offerId) {
-        return offerRepository.findByNaturalId(offerId.value()).map(offerMapper::toOffer);
+        return jpaRepository.findByNaturalId(offerId.value()).map(offerMapper::toOffer);
     }
 
     private OfferEntity mergeEntity(final Offer offer, final OfferEntity entity) {
@@ -64,5 +63,12 @@ public class FindOfferAdapter implements OfferRepository, FindOfferRepository {
                 .street(offer.getAddress().getStreet())
                 .zipCode(offer.getAddress().getZipCode())
                 .build();
+    }
+
+    @Override
+    public List<Offer> findPublished() {
+        return this.jpaRepository.findByStatus(Status.PUBLISHED.getValue()).stream()
+                .map(offerMapper::toOffer)
+                .toList();
     }
 }

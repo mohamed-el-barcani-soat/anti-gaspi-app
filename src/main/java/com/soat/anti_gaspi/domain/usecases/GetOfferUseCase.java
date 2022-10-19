@@ -9,7 +9,8 @@ import java.util.Optional;
 
 public class GetOfferUseCase {
 
-    // TODO use implementation
+
+    // TODO Add SAM with find
     private final OfferRepository offerRepository;
 
     public GetOfferUseCase(OfferRepository offerRepository) {
