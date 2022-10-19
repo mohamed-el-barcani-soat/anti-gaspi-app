@@ -1,20 +1,23 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
+import com.soat.anti_gaspi.domain.FindOfferRepository;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.model.OfferEntity;
+import com.soat.anti_gaspi.model.Status;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @Component
 @AllArgsConstructor
-public class FindOfferAdapter implements OfferRepository, FindOfferRepository {
+public class OfferAdapter implements OfferRepository, FindOfferRepository {
 
     private final OfferJpaRepository jpaRepository;
     private final OfferMapper offerMapper;

@@ -11,14 +11,12 @@ import com.soat.anti_gaspi.infrastructure.repositories.ContactJpaRepository;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.model.Contact;
 import com.soat.anti_gaspi.model.OfferEntity;
-import com.soat.anti_gaspi.model.Status;
 import com.soat.anti_gaspi.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -65,13 +63,12 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<UUID> create(@RequestBody @Validated OfferDto offerDto) {
-        // Use validator of spring instead of mapper one ?
+    public ResponseEntity<String> create(@RequestBody @Validated OfferDto offerDto) {
         var of = offerMapper.map(offerDto);
 
         var offerId = createOffer.create(of);
 
-        return new ResponseEntity<>(UUID.randomUUID(), HttpStatus.CREATED);
+        return new ResponseEntity<>(offerId, HttpStatus.CREATED);
     }
 
     BiPredicate<String, String> fieldValidator = (fieldValue, fieldName) -> {
@@ -95,19 +92,23 @@ public class OfferController {
     }
 
     @GetMapping
-    public ResponseEntity<OfferPage> getPublishedOffers(@RequestParam int pageNumber,
-                                                        @RequestParam int pageSize,
-                                                        @RequestParam String sortBy,
-                                                        @RequestParam(defaultValue = "asc") String sortOrder) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, "desc".equals(sortOrder) ? Sort.by(sortBy).descending() : Sort.by(sortBy));
+    public ResponseEntity<OfferPage> getPaginatedPublishedOffers(@RequestParam int pageNumber,
+                                                                 @RequestParam int pageSize,
+                                                                 @RequestParam String sortBy,
+                                                                 @RequestParam(defaultValue = "asc") String sortOrder) {
 
-        Page<OfferEntity> allOffers = offerRepository.findAllByStatus(Status.PUBLISHED, pageable);
+        List<Offer> allOffers = getPublishedOffers.get();
+        // TODO mettre la pagination dans le mapper (et puis faire le maper)
+        var page = new PagedListHolder<>(allOffers);
+        page.setPageSize(pageSize);
+        page.setPage(pageNumber);
+        page.setSort(new MutableSortDefinition(sortBy, true, "asc".equals(sortOrder)));
 
-        List<SavedOffer> savedOffers = allOffers.stream()
+        var offersPaginated = page.getPageList().stream()
                 .map(this::toOfferDto)
                 .toList();
 
-        var result = new OfferPage(savedOffers, allOffers.getTotalElements());
+        var result = new OfferPage(offersPaginated, page.getPageCount());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
