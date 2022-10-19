@@ -17,8 +17,5 @@ public class SendConfirmationMailUseCase {
 
     public void send(String offerId) throws UnableToSendEmailException, JsonProcessingException {
 
-        //emailSender.send(mail);
-
-
     }
 }
