@@ -1,7 +1,6 @@
 package com.soat.anti_gaspi.domain.usecases;
 
 import com.soat.anti_gaspi.domain.FindOfferRepository;
-import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.OfferKeyFinder;
 import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.domain.exception.OfferKeyNotFoundException;
@@ -20,8 +19,8 @@ public class PublishOfferUseCase {
         this.offerKeyFinder = offerKeyFinder;
     }
 
-    public void publish(OfferId id) {
-        var offer = offerFinder.find(id);
+    public void publish(String key) {
+        var offer = offerFinder.findOfferByHash(key);
 
         if (offer.isEmpty()) {
             throw new OfferNotFoundException("");
@@ -30,8 +29,8 @@ public class PublishOfferUseCase {
         var offerFound = offer.get();
 
         offerKeyFinder.findByOfferId(offerFound.getOfferId())
-                .ifPresentOrElse((key) -> {
-                            offerFound.publish(key);
+                .ifPresentOrElse((keyFound) -> {
+                            offerFound.publish(keyFound);
                             repository.update(offerFound);
                         },
                         () -> {

@@ -15,4 +15,9 @@ public class FakeFindOfferRepositorySendMail implements FindOfferRepository {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Offer> findOfferByHash(String hash) {
+        return Optional.empty();
+    }
+
 }

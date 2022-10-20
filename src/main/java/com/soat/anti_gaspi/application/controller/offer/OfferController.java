@@ -5,15 +5,13 @@ import com.soat.anti_gaspi.application.OfferMapper;
 import com.soat.anti_gaspi.application.controller.offer.dto.*;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.usecases.*;
 import com.soat.anti_gaspi.domain.exception.UnableToSendEmailException;
-import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
-import com.soat.anti_gaspi.domain.usecases.GetOfferUseCase;
-import com.soat.anti_gaspi.domain.usecases.GetPublishedOffersUseCase;
-import com.soat.anti_gaspi.domain.usecases.SendConfirmationMailUseCase;
+import com.soat.anti_gaspi.domain.usecases.*;
 import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,10 +31,12 @@ public class OfferController {
     private final GetPublishedOffersUseCase getPublishedOffers;
     private final PublishOfferUseCase publishOfferUsecase;
     private final DeleteOfferUsecase deleteOfferUsecase;
-
     private final SendConfirmationMailUseCase sendConfirmationMail;
-
     private final OfferMapper offerMapper = new OfferMapper();
+
+    @Autowired
+    private final Environment environment;
+
 
     @PostMapping
     public ResponseEntity<String> create(@RequestBody @Validated OfferDto offerDto) throws NullOfferConfirmationException, UnableToSendEmailException, JsonProcessingException {
@@ -76,17 +76,17 @@ public class OfferController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/{id}/validate")
-    public ResponseEntity<?> validateOffer(@PathVariable("id") String id) {
-        var offerId = new OfferId(id);
-        this.publishOfferUsecase.publish(offerId);
-        return ResponseEntity.ok().build();
+    @GetMapping("/validate")
+    public String validateOffer(@RequestParam("hash") String hash) {
+        final String frontUrl = environment.getProperty("front-url");
+        this.publishOfferUsecase.publish(hash);
+        return "redirect:" + frontUrl;
     }
 
-    @GetMapping("/{id}/delete")
-    public ResponseEntity<?> deleteOffer(@PathVariable("id") String id) {
-        var offerId = new OfferId(id);
-        deleteOfferUsecase.delete(offerId);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/delete")
+    public String deleteOffer(@PathVariable("hash") String hash) {
+         final String frontUrl = environment.getProperty("front-url");
+        deleteOfferUsecase.delete(hash);
+        return "redirect:" + frontUrl;
     }
 }

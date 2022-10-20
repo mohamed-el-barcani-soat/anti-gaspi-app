@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ConfirmationKeyOfferJpaRepository extends JpaRepository<ConfirmationKeyOfferEntity, Long> {
     Optional<ConfirmationKeyOfferEntity> findByOfferId(String offerId);
+    Optional<ConfirmationKeyOfferEntity> findById(String offerId);
 }

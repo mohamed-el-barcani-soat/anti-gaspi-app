@@ -2,6 +2,7 @@ package com.soat.anti_gaspi.infrastructure.repositories;
 
 
 // TODO import unitaire
+
 import com.soat.anti_gaspi.domain.*;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.infrastructure.model.OfferEntity;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class OfferAdapter implements OfferRepository, FindOfferRepository, FindPublishedOffersRepository {
 
     private final OfferJpaRepository jpaRepository;
+    private final ConfirmationKeyOfferJpaRepository keyRepository;
     private final OfferMapper offerMapper;
 
     @Override
@@ -47,6 +49,16 @@ public class OfferAdapter implements OfferRepository, FindOfferRepository, FindP
     @Override
     public Optional<Offer> find(OfferId offerId) {
         return jpaRepository.findByNaturalId(offerId.value()).map(offerMapper::toOffer);
+    }
+
+    @Override
+    public Optional<Offer> findOfferByHash(String hash) {
+        var hashEntity = keyRepository.findById(hash);
+
+        if (hashEntity.isEmpty()) return Optional.empty();
+        return jpaRepository
+                .findByNaturalId(hashEntity.get().getOfferId())
+                .map(offerMapper::toOffer);
     }
 
     private OfferEntity mergeEntity(final Offer offer, final OfferEntity entity) {

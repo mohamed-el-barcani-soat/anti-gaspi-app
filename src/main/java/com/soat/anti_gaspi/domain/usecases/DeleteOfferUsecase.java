@@ -1,10 +1,7 @@
 package com.soat.anti_gaspi.domain.usecases;
 
 import com.soat.anti_gaspi.domain.FindOfferRepository;
-import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.OfferKeyFinder;
 import com.soat.anti_gaspi.domain.OfferRepository;
-import com.soat.anti_gaspi.domain.exception.OfferKeyNotFoundException;
 import com.soat.anti_gaspi.domain.exception.OfferNotFoundException;
 
 public class DeleteOfferUsecase {
@@ -17,8 +14,8 @@ public class DeleteOfferUsecase {
         this.offerFinder = offerFinder;
     }
 
-    public void delete(OfferId id) {
-        var offer = offerFinder.find(id);
+    public void delete(String hash) {
+        var offer = offerFinder.findOfferByHash(hash);
 
         if (offer.isEmpty()) {
             throw new OfferNotFoundException("");
