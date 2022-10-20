@@ -4,7 +4,7 @@ package com.soat.anti_gaspi.infrastructure.repositories;
 // TODO import unitaire
 import com.soat.anti_gaspi.domain.*;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
-import com.soat.anti_gaspi.model.OfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.OfferEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,8 +68,7 @@ public class OfferAdapter implements OfferRepository, FindOfferRepository, FindP
 
     @Override
     public List<Offer> findAllPublished() {
-        // TODO reset as published entities
-        return this.jpaRepository.findByStatus(Status.PENDING.getValue()).stream()
+        return this.jpaRepository.findByStatus(Status.ACCEPTED.getValue()).stream()
                 .map(offerMapper::toOffer)
                 .toList();
     }
