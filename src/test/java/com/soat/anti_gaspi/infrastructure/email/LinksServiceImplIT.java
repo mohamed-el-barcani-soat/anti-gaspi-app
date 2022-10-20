@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class LinksServiceImplIT {
     @Autowired
     private LinksServiceImpl linksService;
-    
+
     @Test
     void should_generate_validate_and_reject_links_with_hash_in_query_params() {
         var offer = Offer.builder().offerId(new OfferId("1234"))
@@ -23,7 +23,7 @@ class LinksServiceImplIT {
         assertThat(pairLinks.rejectLink()).isNotNull();
         assertThat(pairLinks.rejectLink().value()).contains("/api/offers/delete?hash=");
         var rejectLinkValue = pairLinks.rejectLink().value();
-        var rejectLinkHashValue = rejectLinkValue.substring(rejectLinkValue.indexOf("/api/offers/reject?hash=") + "/api/offers/reject?hash=".length());
+        var rejectLinkHashValue = rejectLinkValue.substring(rejectLinkValue.indexOf("/api/offers/delete?hash=") + "/api/offers/delete?hash=".length());
         assertThat(rejectLinkHashValue).isNotBlank();
 
         assertThat(pairLinks.validateLink()).isNotNull();
