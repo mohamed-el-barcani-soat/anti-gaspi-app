@@ -13,14 +13,17 @@ class LinksServiceImplIT {
     @Autowired
     private LinksServiceImpl linksService;
 
+
+
     @Test
     void should_generate_validate_and_reject_links_with_hash_in_query_params() {
-        var offer = Offer.builder().offerId(new OfferId("1234")).build();
+        var offer = Offer.builder().offerId(new OfferId("1234"))
+                .build();
         var pairLinks = linksService.generateLinkBy(offer);
 
         assertThat(pairLinks).isNotNull();
         assertThat(pairLinks.rejectLink()).isNotNull();
-        assertThat(pairLinks.rejectLink().value()).contains("/api/offers/reject?hash=");
+        assertThat(pairLinks.rejectLink().value()).contains("/api/offers/delete?hash=");
         var rejectLinkValue = pairLinks.rejectLink().value();
         var rejectLinkHashValue = rejectLinkValue.substring(rejectLinkValue.indexOf("/api/offers/reject?hash=") + "/api/offers/reject?hash=".length());
         assertThat(rejectLinkHashValue).isNotBlank();

@@ -15,6 +15,7 @@ public class ThymeLeafEmailGenerator implements EmailGenerator {
         this.emailThymeLeafContextFactory = emailThymeLeafContextFactory;
     }
 
+    // TODO : create service to call this email generator
     public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NullOfferConfirmationException {
         var ctx = emailThymeLeafContextFactory.createEmailTemplateContext(offerConfirmationParameters);
 

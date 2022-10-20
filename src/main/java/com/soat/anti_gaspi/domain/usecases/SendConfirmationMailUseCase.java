@@ -25,6 +25,8 @@ public class SendConfirmationMailUseCase {
         var offerId = new OfferId(offerIdStr);
         Offer foundOffer = offerRepository.find(offerId).orElseThrow(() -> new OfferNotFoundException(MessageFormat.format("Offer with id {0} not found", offerId.value())));
 
+
+
         // TODO : create and call link service to get pair of link that generate token and links
 
         // TODO : with links and offer info generate email body
