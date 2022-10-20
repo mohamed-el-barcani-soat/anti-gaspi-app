@@ -1,14 +1,12 @@
 package com.soat.anti_gaspi.domain;
 
 public class Address {
-    private final NumberIndicator numberIndicator;
     private final String street;
     private final String city;
     private final String zipcode;
     private final String country;
 
-    public Address(NumberIndicator numberIndicator, String street, String city, String zipcode, String country) {
-        this.numberIndicator = numberIndicator;
+    public Address(String street, String city, String zipcode, String country) {
         this.street = street;
         this.city = city;
         this.zipcode = zipcode;
@@ -17,10 +15,6 @@ public class Address {
 
     public static AddressBuilder builder() {
         return new AddressBuilder();
-    }
-
-    public String getNumber() {
-        return numberIndicator.getNumber();
     }
 
     public String getStreet() {
@@ -75,7 +69,7 @@ public class Address {
         }
 
         public Address build() {
-            return new Address(numberIndicator, street, city, zipcode, country);
+            return new Address(street, city, zipcode, country);
         }
     }
 

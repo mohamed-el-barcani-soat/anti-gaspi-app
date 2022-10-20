@@ -1,7 +1,5 @@
 package com.soat.anti_gaspi.application.structures.mappers;
 
-import com.soat.anti_gaspi.domain.DomainEntity;
-
 public abstract class Mapper<From, To, DomainValidator extends Validator<From>> {
 
     private final DomainValidator validator;

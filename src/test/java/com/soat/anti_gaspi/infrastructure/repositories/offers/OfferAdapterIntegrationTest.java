@@ -5,7 +5,7 @@ import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.Status;
 import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.infrastructure.repositories.ClockHelper;
-import com.soat.anti_gaspi.infrastructure.repositories.FindOfferAdapter;
+import com.soat.anti_gaspi.infrastructure.repositories.OfferAdapter;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import com.soat.anti_gaspi.model.OfferEntity;
 import org.junit.jupiter.api.Assertions;
@@ -46,7 +46,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_create() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
         var clock = ClockHelper.getClock();
         var id = "id";
 
@@ -71,7 +71,6 @@ class OfferAdapterIntegrationTest {
         assertThat(result.getTitle()).isEqualTo(validOffer.getTitle());
         assertThat(result.getDescription()).isEqualTo(validOffer.getDescription());
         assertThat(result.getEmail()).isEqualTo(validOffer.getUser().getEmail().getValue());
-        assertThat(result.getNumber()).isEqualTo(validOffer.getAddress().getNumber());
         assertThat(result.getStreet()).isEqualTo(validOffer.getAddress().getStreet());
         assertThat(result.getCity()).isEqualTo(validOffer.getAddress().getCity());
         assertThat(result.getZipCode()).isEqualTo(validOffer.getAddress().getZipCode());
@@ -84,7 +83,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_throw_error_offer_on_identical_natural_id() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
         var clock = ClockHelper.getClock();
         Offer validOffer = OfferHelper.getOffer("id", "email@email.fr", "1", OffsetDateTime.now(clock), OffsetDateTime.now(clock), Status.PENDING);
 
@@ -102,7 +101,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_update_offer() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
         Clock clock = ClockHelper.getClock();
         OfferHelper.insertOffer(jdbcTemplate, OfferHelper.getOfferAsSqlMapProperties("id", "email@email.fr", "1", OffsetDateTime.now(clock), OffsetDateTime.now(clock), Status.PENDING));
 
@@ -124,7 +123,6 @@ class OfferAdapterIntegrationTest {
         assertThat(modifiedOfferEntity.getTitle()).isEqualTo(modifiedOffer.getTitle());
         assertThat(modifiedOfferEntity.getDescription()).isEqualTo(modifiedOffer.getDescription());
         assertThat(modifiedOfferEntity.getEmail()).isEqualTo(modifiedOffer.getUser().getEmail().getValue());
-        assertThat(modifiedOfferEntity.getNumber()).isEqualTo(modifiedOffer.getAddress().getNumber());
         assertThat(modifiedOfferEntity.getStreet()).isEqualTo(modifiedOffer.getAddress().getStreet());
         assertThat(modifiedOfferEntity.getCity()).isEqualTo(modifiedOffer.getAddress().getCity());
         assertThat(modifiedOfferEntity.getZipCode()).isEqualTo(modifiedOffer.getAddress().getZipCode());
@@ -137,7 +135,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_return_empty_on_uncreated_offer_when_update() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
         Clock clock = ClockHelper.getClock();
 
         var modifiedOffer = OfferHelper.getOffer("id", "emailmodifié@email.fr", "1 bis", OffsetDateTime.now(clock), OffsetDateTime.now(clock), Status.PENDING);
@@ -153,7 +151,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_find_offer_on_present_offer() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
         Clock clock = ClockHelper.getClock();
         var id = "id";
         var startOffer = OffsetDateTime.now(clock);
@@ -171,7 +169,6 @@ class OfferAdapterIntegrationTest {
         assertThat(offerFound.getTitle()).isEqualTo(null);
         assertThat(offerFound.getDescription()).isEqualTo(null);
         assertThat(offerFound.getUser().getEmail().getValue()).isEqualTo("email@email.fr");
-        assertThat(offerFound.getAddress().getNumber()).isEqualTo("1");
         assertThat(offerFound.getAddress().getStreet()).isEqualTo(null);
         assertThat(offerFound.getAddress().getCity()).isEqualTo(null);
         assertThat(offerFound.getAddress().getZipCode()).isEqualTo(null);
@@ -184,7 +181,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_return_empty_on_not_found() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
 
         // When
         var offer = offersAdapter.find(new OfferId("id"));
@@ -196,7 +193,7 @@ class OfferAdapterIntegrationTest {
     @Test
     void should_delete() {
         // Given
-        var offersAdapter = new FindOfferAdapter(offerJpaRepository, offerMapper);
+        var offersAdapter = new OfferAdapter(offerJpaRepository, offerMapper);
         Clock clock = ClockHelper.getClock();
         var id = "id";
         var startOffer = OffsetDateTime.now(clock);

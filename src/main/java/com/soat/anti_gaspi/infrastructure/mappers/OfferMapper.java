@@ -15,7 +15,6 @@ public class OfferMapper {
                     .title(offer.getTitle())
                     .description(offer.getDescription())
                     .email(offer.getUser().getEmail().getValue())
-                    .number(String.valueOf(offer.getAddress().getNumber()))
                     .street(offer.getAddress().getStreet())
                     .city(offer.getAddress().getCity())
                     .zipCode(offer.getAddress().getZipCode())
