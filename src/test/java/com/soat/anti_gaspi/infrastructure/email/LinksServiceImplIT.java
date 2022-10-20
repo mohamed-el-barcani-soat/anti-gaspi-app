@@ -17,7 +17,7 @@ class LinksServiceImplIT {
     void should_generate_validate_and_reject_links_with_hash_in_query_params() {
         var offer = Offer.builder().offerId(new OfferId("1234"))
                 .build();
-        var pairLinks = linksService.generateLinkBy(offer);
+        var pairLinks = linksService.generatePairLinksBy(offer);
 
         assertThat(pairLinks).isNotNull();
         assertThat(pairLinks.rejectLink()).isNotNull();

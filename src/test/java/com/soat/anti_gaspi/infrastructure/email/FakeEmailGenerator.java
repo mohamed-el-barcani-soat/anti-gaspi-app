@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 
 public class FakeEmailGenerator implements EmailGenerator {
     @Override
-    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NotFoundException, NullOfferConfirmationException {
+    public String generateEmailFromTemplate(OfferConfirmationParameters offerConfirmationParameters) throws NullOfferConfirmationException {
         return "<div>" +
                 MessageFormat.format("title : {} -", offerConfirmationParameters.title()) +
                 MessageFormat.format("description : {} -", offerConfirmationParameters.description()) +

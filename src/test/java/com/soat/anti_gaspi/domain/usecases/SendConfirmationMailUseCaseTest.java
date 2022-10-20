@@ -31,7 +31,7 @@ class SendConfirmationMailUseCaseTest {
                 mockEmailSender);
         var offerId = new OfferId("97UHIUG8I7G8G");
 
-        assertThatThrownBy(() -> sendConfirmationMailUseCase.send("97UHIUG8I7G8G"))
+        assertThatThrownBy(() -> sendConfirmationMailUseCase.send(new OfferId("97UHIUG8I7G8G")))
                 .isExactlyInstanceOf(OfferNotFoundException.class)
                 .hasMessage(MessageFormat.format("Offer with id {0} not found", offerId.value()));
     }
@@ -44,9 +44,6 @@ class SendConfirmationMailUseCaseTest {
                 (offer) -> new PairLinks(new ValidateLink("http://validatelink.com"), new RejectLink("http://rejectlink.com")),
                 fakeEmailGenerator,
                 mockEmailSender);
-
-
-
 
     }
 }

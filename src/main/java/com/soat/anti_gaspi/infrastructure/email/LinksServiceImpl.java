@@ -6,12 +6,13 @@ import com.soat.anti_gaspi.infrastructure.service.HashGenerator;
 import com.soat.anti_gaspi.model.ConfirmationKeyOfferEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class LinksServiceImpl implements LinksService {
     private static final String VALIDATE_TYPE_LINK = "validate";
@@ -20,7 +21,7 @@ public class LinksServiceImpl implements LinksService {
 
     private final HashGenerator hashGenerator;
     @Override
-    public PairLinks generateLinkBy(Offer offer) {
+    public PairLinks generatePairLinksBy(Offer offer) {
         String hashKey = hashGenerator.generate(offer);
         ConfirmationKeyOfferEntity confirmationKeyOffer = ConfirmationKeyOfferEntity.builder()
                 .key_hash(hashKey)
