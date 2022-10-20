@@ -6,19 +6,16 @@ import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
 import com.soat.anti_gaspi.domain.usecases.GetOfferUseCase;
 import com.soat.anti_gaspi.domain.usecases.GetPublishedOffersUseCase;
-import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
-// Add validator ?
 @Slf4j
 @RestController
 @RequestMapping(OfferController.PATH)
@@ -37,7 +34,13 @@ public class OfferController {
 
         var offerId = createOffer.create(offer);
 
-        return new ResponseEntity<>(offerId, HttpStatus.CREATED);
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder
+                        .fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(offerId)
+                        .toUri()
+        ).build();
     }
 
     @GetMapping
@@ -56,7 +59,6 @@ public class OfferController {
     public ResponseEntity<SavedOfferDto> findById(@PathVariable("id") String id) {
 
         var offerId = new OfferId(id);
-        // TODO use ooptional on offerId to extend notation
         return getOffer.get(offerId).map(OfferDtoMapper::map)
                 .map(offer -> new ResponseEntity<>(offer, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
