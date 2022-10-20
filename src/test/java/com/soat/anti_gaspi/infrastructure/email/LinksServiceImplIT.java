@@ -20,9 +20,15 @@ class LinksServiceImplIT {
 
         assertThat(pairLinks).isNotNull();
         assertThat(pairLinks.rejectLink()).isNotNull();
-        assertThat(pairLinks.rejectLink().value()).contains("/api/offers/reject?hash=1234");
+        assertThat(pairLinks.rejectLink().value()).contains("/api/offers/reject?hash=");
+        var rejectLinkValue = pairLinks.rejectLink().value();
+        var rejectLinkHashValue = rejectLinkValue.substring(rejectLinkValue.indexOf("/api/offers/reject?hash=") + "/api/offers/reject?hash=".length());
+        assertThat(rejectLinkHashValue).isNotBlank();
 
         assertThat(pairLinks.validateLink()).isNotNull();
-        assertThat(pairLinks.validateLink().value()).contains("/api/offers/validate?hash=1234");
+        assertThat(pairLinks.validateLink().value()).contains("/api/offers/validate?hash=");
+        var validateLinkValue = pairLinks.validateLink().value();
+        var validateLinkHashValue = validateLinkValue.substring(validateLinkValue.indexOf("/api/offers/validate?hash=") + "/api/offers/validate?hash=".length());
+        assertThat(validateLinkHashValue).isNotBlank();
     }
 }

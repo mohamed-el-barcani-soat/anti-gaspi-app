@@ -6,7 +6,6 @@ import com.soat.anti_gaspi.infrastructure.service.HashGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -18,7 +17,7 @@ public class OfferIdHashAdapter implements OfferIdHashRepository {
     private final HashGenerator hashGenerator;
 
     @Override
-    public Hash updateWithHash(Offer offer) throws NoSuchAlgorithmException {
+    public Hash updateWithHash(Offer offer) {
         var token = hashGenerator.generate(offer);
         Hash hash = new Hash(token);
         mapOfferIdToken.put(hash, offer.getOfferId());
