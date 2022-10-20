@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping(OfferController.PATH)
 @AllArgsConstructor
 public class OfferController {
-    public static final String PATH = "/offers";
+    public static final String PATH = "/api/offers";
     private final CreateOfferUseCase createOffer;
     private final GetOfferUseCase getOffer;
     private final GetPublishedOffersUseCase getPublishedOffers;
