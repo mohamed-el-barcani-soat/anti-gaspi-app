@@ -15,8 +15,4 @@ public class FakeFindOfferRepositorySendMail implements FindOfferRepository {
         return Optional.empty();
     }
 
-    @Override
-    public List<Offer> findPublished() {
-        return Collections.emptyList();
-    }
 }

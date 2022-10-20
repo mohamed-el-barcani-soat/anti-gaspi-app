@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OfferHelper {
     public static Offer getOffer(final String id, final String email,
@@ -46,7 +47,7 @@ public class OfferHelper {
                                 .email(resultSet.getString("email"))
                                 .description(resultSet.getString("description"))
                                 .naturalId(resultSet.getString("natural_id"))
-                                .id(resultSet.getString("id"))
+                                .id(UUID.fromString(resultSet.getString("id")))
                                 .city(resultSet.getString("city"))
                                 .country(resultSet.getString("country"))
                                 .number(resultSet.getString("number"))

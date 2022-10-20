@@ -5,5 +5,4 @@ import java.util.Optional;
 
 public interface FindOfferRepository {
     Optional<Offer> find(OfferId offerId);
-    List<Offer> findPublished();
 }

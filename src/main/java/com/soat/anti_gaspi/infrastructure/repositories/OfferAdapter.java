@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class OfferAdapter implements OfferRepository, FindOfferRepository {
+public class OfferAdapter implements OfferRepository, FindOfferRepository, FindPublishedOffersRepository {
 
     private final OfferJpaRepository jpaRepository;
     private final OfferMapper offerMapper;
@@ -67,7 +67,7 @@ public class OfferAdapter implements OfferRepository, FindOfferRepository {
     }
 
     @Override
-    public List<Offer> findPublished() {
+    public List<Offer> findAllPublished() {
         // TODO reset as published entities
         return this.jpaRepository.findByStatus(Status.PENDING.getValue()).stream()
                 .map(offerMapper::toOffer)
