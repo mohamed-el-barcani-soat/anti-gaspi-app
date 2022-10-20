@@ -80,13 +80,13 @@ public class OfferController {
     public String validateOffer(@RequestParam("hash") String hash) {
         final String frontUrl = environment.getProperty("front-url");
         this.publishOfferUsecase.publish(hash);
-        return "redirect:" + frontUrl;
+        return "redirect:" + frontUrl + "/validated";
     }
 
     @GetMapping("/delete")
     public String deleteOffer(@PathVariable("hash") String hash) {
          final String frontUrl = environment.getProperty("front-url");
         deleteOfferUsecase.delete(hash);
-        return "redirect:" + frontUrl;
+        return "redirect:" + frontUrl + "/deleted";
     }
 }
