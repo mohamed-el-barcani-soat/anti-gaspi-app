@@ -15,6 +15,7 @@ public class OfferMapper {
                     .title(offer.getTitle())
                     .description(offer.getDescription())
                     .email(offer.getUser().getEmail().getValue())
+                    .username(offer.getUser().getUsername())
                     .street(offer.getAddress().getStreet())
                     .city(offer.getAddress().getCity())
                     .zipCode(offer.getAddress().getZipCode())
@@ -30,7 +31,7 @@ public class OfferMapper {
                 .offerId(new OfferId(offerEntity.getNaturalId()))
                 .title(offerEntity.getTitle())
                 .description(offerEntity.getDescription())
-                .user(User.builder().email(Email.builder().value(offerEntity.getEmail()).build()).build())
+                .user(User.builder().username(offerEntity.getUsername()).email(Email.builder().value(offerEntity.getEmail()).build()).build())
                 .address(
                         Address.builder()
                                 .number(

@@ -55,6 +55,7 @@ public class OfferAdapter implements OfferRepository, FindOfferRepository, FindP
                 .naturalId(offer.getOfferId().value())
                 .availabilityDate(offer.getAvailabilityDate().toLocalDateTime())
                 .country(offer.getAddress().getCountry())
+                .username(offer.getUser().getUsername())
                 .email(offer.getUser().getEmail().getValue())
                 .description(offer.getDescription())
                 .expirationDate(offer.getExpirationDate().toLocalDateTime())

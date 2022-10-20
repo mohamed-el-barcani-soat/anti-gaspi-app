@@ -34,6 +34,8 @@ public class OfferEntity {
     private String description;
     @Column(name = "email")
     private String email;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "number")
     private String number;
