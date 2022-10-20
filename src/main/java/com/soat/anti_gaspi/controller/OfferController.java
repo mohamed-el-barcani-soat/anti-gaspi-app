@@ -3,9 +3,7 @@ package com.soat.anti_gaspi.controller;
 import com.soat.anti_gaspi.application.OfferMapper;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
-import com.soat.anti_gaspi.domain.usecases.GetOfferUseCase;
-import com.soat.anti_gaspi.domain.usecases.GetPublishedOffersUseCase;
+import com.soat.anti_gaspi.domain.usecases.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,8 @@ public class OfferController {
     private final CreateOfferUseCase createOffer;
     private final GetOfferUseCase getOffer;
     private final GetPublishedOffersUseCase getPublishedOffers;
+    private final PublishOfferUseCase publishOfferUsecase;
+    private final DeleteOfferUsecase deleteOfferUsecase;
 
     private final OfferMapper offerMapper = new OfferMapper();
 
@@ -65,14 +65,16 @@ public class OfferController {
     }
 
     @GetMapping("/{id}/validate")
-    public ResponseEntity<Void> validateOffer(@PathVariable("id") String id) {
-        // TODO implement confirmation
-        return null;
+    public ResponseEntity<?> validateOffer(@PathVariable("id") String id) {
+        var offerId = new OfferId(id);
+        this.publishOfferUsecase.publish(offerId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteOffer(@PathVariable("id") String id) {
-        // TODO implement deletion
-        return null;
+    public ResponseEntity<?> deleteOffer(@PathVariable("id") String id) {
+        var offerId = new OfferId(id);
+        deleteOfferUsecase.delete(offerId);
+        return ResponseEntity.noContent().build();
     }
 }

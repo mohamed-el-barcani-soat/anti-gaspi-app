@@ -9,6 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class OfferPage {
-    List<SavedOfferDto> offers;
+    List<SavedOfferDto> elements;
     int pageCount;
 }

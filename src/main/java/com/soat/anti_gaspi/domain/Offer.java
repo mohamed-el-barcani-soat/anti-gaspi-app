@@ -9,7 +9,7 @@ public class Offer implements DomainEntity {
     private final String description;
     private final User user;
     private final Address address;
-    private final Status status;
+    private Status status;
     private final OffsetDateTime availabilityDate;
     private final OffsetDateTime expirationDate;
 
@@ -62,6 +62,14 @@ public class Offer implements DomainEntity {
 
     public void validateCreation() {
 
+    }
+
+    public void publish(final OfferKey key) {
+        this.status = Status.ACCEPTED;
+    }
+
+    public void delete() {
+        this.status = Status.REJECTED;
     }
 
     public static class OfferBuilder {
