@@ -1,7 +1,7 @@
 package com.soat.anti_gaspi.infrastructure.repositories.offers;
 
 import com.soat.anti_gaspi.domain.*;
-import com.soat.anti_gaspi.model.OfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.OfferEntity;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 

@@ -1,12 +1,5 @@
 package com.soat.anti_gaspi.application.offer.mappers;
 
-import com.soat.anti_gaspi.application.OfferMapper;
-import com.soat.anti_gaspi.controller.OfferDto;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 

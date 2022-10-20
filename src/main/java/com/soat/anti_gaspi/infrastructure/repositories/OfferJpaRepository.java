@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
-import com.soat.anti_gaspi.model.OfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.OfferEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

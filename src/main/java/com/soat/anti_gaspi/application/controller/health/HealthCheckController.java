@@ -1,4 +1,4 @@
-package com.soat.anti_gaspi.controller;
+package com.soat.anti_gaspi.application.controller.health;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

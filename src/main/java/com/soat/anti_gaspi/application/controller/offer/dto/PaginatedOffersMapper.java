@@ -1,4 +1,4 @@
-package com.soat.anti_gaspi.controller;
+package com.soat.anti_gaspi.application.controller.offer.dto;
 
 import com.soat.anti_gaspi.domain.Offer;
 import org.springframework.beans.support.MutableSortDefinition;

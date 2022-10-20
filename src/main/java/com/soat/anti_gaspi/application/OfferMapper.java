@@ -2,7 +2,7 @@ package com.soat.anti_gaspi.application;
 
 import com.soat.anti_gaspi.application.structures.mappers.Mapper;
 import com.soat.anti_gaspi.application.validators.CreateOfferValidator;
-import com.soat.anti_gaspi.controller.OfferDto;
+import com.soat.anti_gaspi.application.controller.offer.dto.OfferDto;
 import com.soat.anti_gaspi.domain.*;
 
 import java.time.OffsetDateTime;

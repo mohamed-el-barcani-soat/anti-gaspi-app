@@ -1,4 +1,4 @@
-package com.soat.anti_gaspi.model;
+package com.soat.anti_gaspi.infrastructure.model;
 
 import lombok.*;
 

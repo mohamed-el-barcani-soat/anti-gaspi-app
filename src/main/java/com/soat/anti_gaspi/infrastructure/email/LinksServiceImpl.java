@@ -3,9 +3,8 @@ package com.soat.anti_gaspi.infrastructure.email;
 import com.soat.anti_gaspi.domain.*;
 import com.soat.anti_gaspi.infrastructure.repositories.ConfirmationKeyOfferJpaRepository;
 import com.soat.anti_gaspi.infrastructure.service.HashGenerator;
-import com.soat.anti_gaspi.model.ConfirmationKeyOfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.ConfirmationKeyOfferEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

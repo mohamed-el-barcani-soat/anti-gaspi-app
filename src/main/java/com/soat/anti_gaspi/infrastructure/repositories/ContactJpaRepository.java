@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
-import com.soat.anti_gaspi.model.Contact;
+import com.soat.anti_gaspi.infrastructure.model.Contact;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

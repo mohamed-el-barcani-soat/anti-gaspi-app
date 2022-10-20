@@ -1,7 +1,8 @@
-package com.soat.anti_gaspi.controller;
+package com.soat.anti_gaspi.application.controller.offer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.soat.anti_gaspi.application.OfferMapper;
+import com.soat.anti_gaspi.application.controller.offer.dto.*;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.usecases.*;

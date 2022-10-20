@@ -3,7 +3,7 @@ package com.soat.anti_gaspi.application.validators;
 import com.soat.anti_gaspi.application.exceptions.InvalidDateFormat;
 import com.soat.anti_gaspi.application.exceptions.InvalidFormatException;
 import com.soat.anti_gaspi.application.structures.mappers.Validator;
-import com.soat.anti_gaspi.controller.OfferDto;
+import com.soat.anti_gaspi.application.controller.offer.dto.OfferDto;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;

@@ -7,7 +7,7 @@ import com.soat.anti_gaspi.infrastructure.mappers.OfferMapper;
 import com.soat.anti_gaspi.infrastructure.repositories.ClockHelper;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferAdapter;
 import com.soat.anti_gaspi.infrastructure.repositories.OfferJpaRepository;
-import com.soat.anti_gaspi.model.OfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.OfferEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

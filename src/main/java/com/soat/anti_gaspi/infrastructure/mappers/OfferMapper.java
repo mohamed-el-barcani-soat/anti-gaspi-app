@@ -1,7 +1,7 @@
 package com.soat.anti_gaspi.infrastructure.mappers;
 
 import com.soat.anti_gaspi.domain.*;
-import com.soat.anti_gaspi.model.OfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.OfferEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;

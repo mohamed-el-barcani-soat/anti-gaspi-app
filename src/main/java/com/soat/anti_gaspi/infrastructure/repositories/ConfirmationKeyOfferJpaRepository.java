@@ -1,6 +1,6 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
-import com.soat.anti_gaspi.model.ConfirmationKeyOfferEntity;
+import com.soat.anti_gaspi.infrastructure.model.ConfirmationKeyOfferEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
