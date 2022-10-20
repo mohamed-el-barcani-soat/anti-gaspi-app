@@ -1,9 +1,7 @@
 package com.soat.anti_gaspi.infrastructure.repositories;
 
-import com.soat.anti_gaspi.domain.Hash;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.OfferIdHashRepository;
 import com.soat.anti_gaspi.infrastructure.service.HashGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

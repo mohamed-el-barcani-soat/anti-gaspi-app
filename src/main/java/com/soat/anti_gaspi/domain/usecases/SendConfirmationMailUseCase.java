@@ -10,14 +10,12 @@ import java.text.MessageFormat;
 
 public class SendConfirmationMailUseCase {
     private final FindOfferRepository offerRepository;
-    private final OfferIdHashRepository offerIdHashRepository;
     private final LinksService linksService;
     private final EmailGenerator emailGenerator;
     private final EmailSender emailSender;
 
-    public SendConfirmationMailUseCase(FindOfferRepository findOfferRepository, OfferIdHashRepository offerIdHashRepository, LinksService linksService, EmailGenerator emailGenerator, EmailSender emailSender) {
+    public SendConfirmationMailUseCase(FindOfferRepository findOfferRepository, LinksService linksService, EmailGenerator emailGenerator, EmailSender emailSender) {
         this.offerRepository = findOfferRepository;
-        this.offerIdHashRepository = offerIdHashRepository;
         this.linksService = linksService;
         this.emailGenerator = emailGenerator;
         this.emailSender = emailSender;

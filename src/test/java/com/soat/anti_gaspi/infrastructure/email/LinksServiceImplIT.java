@@ -1,6 +1,7 @@
 package com.soat.anti_gaspi.infrastructure.email;
 
-import com.soat.anti_gaspi.domain.Hash;
+import com.soat.anti_gaspi.domain.Offer;
+import com.soat.anti_gaspi.domain.OfferId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +15,8 @@ class LinksServiceImplIT {
 
     @Test
     void should_generate_validate_and_reject_links_with_hash_in_query_params() {
-        var hash = new Hash("1234");
-        var pairLinks = linksService.generateLinkBy(hash);
+        var offer = Offer.builder().offerId(new OfferId("1234")).build();
+        var pairLinks = linksService.generateLinkBy(offer);
 
         assertThat(pairLinks).isNotNull();
         assertThat(pairLinks.rejectLink()).isNotNull();

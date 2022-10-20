@@ -1,9 +1,9 @@
 package com.soat.anti_gaspi.infrastructure.repositories.email;
 
-import com.soat.anti_gaspi.domain.Hash;
+import com.soat.anti_gaspi.infrastructure.repositories.Hash;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
-import com.soat.anti_gaspi.domain.OfferIdHashRepository;
+import com.soat.anti_gaspi.infrastructure.repositories.OfferIdHashRepository;
 
 import java.util.Optional;
 
