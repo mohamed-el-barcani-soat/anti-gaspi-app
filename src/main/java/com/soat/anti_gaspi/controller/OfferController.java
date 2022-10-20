@@ -16,14 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Clock;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +35,6 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping(OfferController.PATH)
 public class OfferController {
-    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final String PATH = "/api/offers";
     private final EmailService smailService;
     private final OfferJpaRepository offerRepository;
@@ -46,8 +43,6 @@ public class OfferController {
     private final CreateOfferUseCase createOffer;
     private final GetOfferUseCase getOffer;
     private final GetPublishedOffersUseCase getPublishedOffers;
-
-    private static final String FRENCH_PHONE_NUM_REGEX = "^(?:(?:\\+|00)33|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}$";
 
     private final OfferMapper offerMapper = new OfferMapper();
 
@@ -70,14 +65,6 @@ public class OfferController {
 
         return new ResponseEntity<>(offerId, HttpStatus.CREATED);
     }
-
-    BiPredicate<String, String> fieldValidator = (fieldValue, fieldName) -> {
-        boolean test = !fieldValue.isEmpty() && !fieldValue.isBlank();
-        if (!test) {
-            log.warn("{} not valid  :(", fieldName);
-        }
-        return test;
-    };
 
     @PostMapping("/{id}/confirm")
     public ResponseEntity<Void> confirm(@PathVariable("id") UUID uuid) {
@@ -160,22 +147,9 @@ public class OfferController {
         );
 
         contact.setId(UUID.randomUUID());
-        if (!fieldValidator.test(contact.getFirstName(), "FirstName") ||
-                !fieldValidator.test(contact.getLastName(), "LastName") ||
-                !validMatch.test(contact.getPhoneNumber(), FRENCH_PHONE_NUM_REGEX)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         final Contact savedContact = contactRepository.save(contact);
         final OfferEntity offerEntity = offerRepository.findById(id.toString()).orElse(null);
         smailService.sendEmail(contactToSave.lastName() + "is interested to your offer", null, "toto");
         return new ResponseEntity<>(savedContact.getId(), HttpStatus.CREATED);
     }
-
-    BiPredicate<String, String> validMatch = (value, regex) -> {
-        final Pattern r = Pattern.compile(regex);
-        final Matcher m = r.matcher(value);
-        return m.matches();
-    };
-
-
 }

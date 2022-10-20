@@ -1,14 +1,13 @@
 package com.soat.anti_gaspi.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 
 @AllArgsConstructor
-@Setter
-// TODO remove setter or data
+@Data
 public class OfferPage {
     List<SavedOffer> offers;
     int pageCount;

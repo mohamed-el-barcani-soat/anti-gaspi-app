@@ -6,21 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
+
+// TODO import * bad bad
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-@Entity(name = "offer")
+@Entity()
+@Table(name = "offer")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class OfferEntity {
 
-    @Id()
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    // TODO prefere a long
+    @Id
+    @GeneratedValue
+    private UUID id;
 
-    @NaturalId()
+    @NaturalId
     @Column(name = "natural_id")
     private String naturalId;
     @Column(name = "title")
