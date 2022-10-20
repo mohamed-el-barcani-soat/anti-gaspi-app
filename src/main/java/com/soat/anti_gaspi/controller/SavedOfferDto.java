@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 //TODO rename moi ca
-public class SavedOffer {
+public class SavedOfferDto {
     String offerId;
     String title;
     String description;
