@@ -10,8 +10,11 @@ import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationE
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
 
 public class SendConfirmationMailUseCase {
+    private static final String CONFIRMATION_EMAIL_SUBJECT = "Confirmation de votre offre";
+    private static final String EMAIL_SENDER = "antigaspi.teamjava@gmail.com";
     private final FindOfferRepository offerRepository;
     private final LinksService linksService;
     private final EmailGenerator emailGenerator;
@@ -32,19 +35,19 @@ public class SendConfirmationMailUseCase {
         OfferConfirmationParameters offerConfirmationParameters = new OfferConfirmationParameters(
                 foundOffer.getTitle(),
                 foundOffer.getDescription(),
-                foundOffer.getUser().getEmail().getValue(),
+                foundOffer.getUser().getUsername(),
                 foundOffer.getAddress().toString(),
-                foundOffer.getAvailabilityDate().toString(),
-                foundOffer.getExpirationDate().toString(),
+                foundOffer.getAvailabilityDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                foundOffer.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 pairLinks.validateLink().value(),
                 pairLinks.rejectLink().value()
         );
 
         String emailBody = emailGenerator.generateEmailFromTemplate(offerConfirmationParameters);
 
-        emailSender.send(new EmailInformation(Email.builder().value("antigaspi.teamjava@gmail.com").build(),
-                Email.builder().value("masataka.ishii@soat.fr").build(),
-                "Confirmation de votre offre",
+        emailSender.send(new EmailInformation(Email.builder().value(foundOffer.getUser().getEmail().getValue()).build(),
+                Email.builder().value(EMAIL_SENDER).build(),
+                CONFIRMATION_EMAIL_SUBJECT,
                 emailBody));
     }
 }

@@ -33,6 +33,11 @@ public class Address {
         return country;
     }
 
+    @Override
+    public String toString() {
+        return street + ", " + zipcode + " " + city + ", " + country;
+    }
+
     public static class AddressBuilder {
         private  NumberIndicator numberIndicator;
         private  String street;

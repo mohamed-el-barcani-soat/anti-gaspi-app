@@ -1,9 +1,16 @@
 package com.soat.anti_gaspi.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.soat.anti_gaspi.application.OfferMapper;
 import com.soat.anti_gaspi.domain.Offer;
 import com.soat.anti_gaspi.domain.OfferId;
 import com.soat.anti_gaspi.domain.usecases.*;
+import com.soat.anti_gaspi.domain.exception.UnableToSendEmailException;
+import com.soat.anti_gaspi.domain.usecases.CreateOfferUseCase;
+import com.soat.anti_gaspi.domain.usecases.GetOfferUseCase;
+import com.soat.anti_gaspi.domain.usecases.GetPublishedOffersUseCase;
+import com.soat.anti_gaspi.domain.usecases.SendConfirmationMailUseCase;
+import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,13 +33,17 @@ public class OfferController {
     private final PublishOfferUseCase publishOfferUsecase;
     private final DeleteOfferUsecase deleteOfferUsecase;
 
+    private final SendConfirmationMailUseCase sendConfirmationMail;
+
     private final OfferMapper offerMapper = new OfferMapper();
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Validated OfferDto offerDto) {
+    public ResponseEntity<String> create(@RequestBody @Validated OfferDto offerDto) throws NullOfferConfirmationException, UnableToSendEmailException, JsonProcessingException {
         var offer = offerMapper.map(offerDto);
 
         var offerId = createOffer.create(offer);
+
+        sendConfirmationMail.send(new OfferId(offerId));
 
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
