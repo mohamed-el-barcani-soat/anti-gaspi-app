@@ -12,9 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class LinksServiceImplIT {
     @Autowired
     private LinksServiceImpl linksService;
-
-
-
+    
     @Test
     void should_generate_validate_and_reject_links_with_hash_in_query_params() {
         var offer = Offer.builder().offerId(new OfferId("1234"))

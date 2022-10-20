@@ -23,7 +23,7 @@ public class LinksServiceImpl implements LinksService {
     public PairLinks generateLinkBy(Offer offer) {
         String hashKey = hashGenerator.generate(offer);
         ConfirmationKeyOfferEntity confirmationKeyOffer = ConfirmationKeyOfferEntity.builder()
-                .key(hashKey)
+                .key_hash(hashKey)
                 .creationDate(LocalDateTime.now())
                 .offerId(offer.getOfferId().value())
                 .build();
@@ -31,8 +31,8 @@ public class LinksServiceImpl implements LinksService {
         String appLink = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .build()
                 .toUriString();
-        var validateLink = new ValidateLink(generateLink(appLink, VALIDATE_TYPE_LINK, confirmationKeyOfferEntity.getKey()));
-        var rejectLink = new RejectLink(generateLink(appLink, DELETE_TYPE_LINK, confirmationKeyOfferEntity.getKey()));
+        var validateLink = new ValidateLink(generateLink(appLink, VALIDATE_TYPE_LINK, confirmationKeyOfferEntity.getKey_hash()));
+        var rejectLink = new RejectLink(generateLink(appLink, DELETE_TYPE_LINK, confirmationKeyOfferEntity.getKey_hash()));
         return new PairLinks(validateLink, rejectLink);
     }
 
