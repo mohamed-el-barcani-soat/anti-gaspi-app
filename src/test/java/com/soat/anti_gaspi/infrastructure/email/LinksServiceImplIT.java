@@ -20,9 +20,9 @@ class LinksServiceImplIT {
 
         assertThat(pairLinks).isNotNull();
         assertThat(pairLinks.rejectLink()).isNotNull();
-        assertThat(pairLinks.rejectLink().value()).contains("/api/reject?hash=1234");
+        assertThat(pairLinks.rejectLink().value()).contains("/api/offers/reject?hash=1234");
 
         assertThat(pairLinks.validateLink()).isNotNull();
-        assertThat(pairLinks.validateLink().value()).contains("/api/validate?hash=1234");
+        assertThat(pairLinks.validateLink().value()).contains("/api/offers/validate?hash=1234");
     }
 }
