@@ -9,17 +9,20 @@ import com.soat.anti_gaspi.infrastructure.exception.SendgridException;
 import com.soat.anti_gaspi.infrastructure.mail_sender.dto.*;
 import com.soat.anti_gaspi.infrastructure.utility.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-@Component
+@Component("sendgrid")
+@Primary
 @Slf4j
 public class SendgridAsyncEmailSender implements EmailSender {
     private final SendgridProperties sendgridProperties;
@@ -45,8 +48,15 @@ public class SendgridAsyncEmailSender implements EmailSender {
     public void send(EmailInformation mail) throws UnableToSendEmailException, JsonProcessingException {
         HttpRequest request = buildRequest(mail);
 
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(stringHttpResponse -> log.info(String.valueOf(stringHttpResponse.statusCode())));
+        //client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+          //      .thenAccept(stringHttpResponse -> log.info(String.valueOf(stringHttpResponse.statusCode())));
+        try {
+            client.send(request, HttpResponse.BodyHandlers.ofString());
+            log.info("Email sent");
+        } catch (IOException | InterruptedException e) {
+            log.error("Unable to send email", e);
+            throw new RuntimeException(e);
+        }
     }
 
     private HttpRequest buildRequest(EmailInformation mail) throws JsonProcessingException {
@@ -64,6 +74,9 @@ public class SendgridAsyncEmailSender implements EmailSender {
                 List.of(content)
         );
         var body = jsonMapper.toJson(sendgrid);
+        log.info("PROPERTIES KEY: " + sendgridProperties.getApiKey());
+        log.info("PROPERTIES URL: " + sendgridProperties.getUrl());
+
 
         return HttpRequest.newBuilder()
                 .uri(uri)

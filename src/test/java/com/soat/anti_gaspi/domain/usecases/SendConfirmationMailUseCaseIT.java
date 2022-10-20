@@ -4,15 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.soat.anti_gaspi.domain.*;
 import com.soat.anti_gaspi.domain.exception.UnableToSendEmailException;
 import com.soat.anti_gaspi.infrastructure.email.exception.NullOfferConfirmationException;
-import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.OffsetDateTime;
-
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class SendConfirmationMailUseCaseIT {
@@ -24,14 +20,14 @@ class SendConfirmationMailUseCaseIT {
     private OfferRepository offerRepository;
 
     @Test
-    void test() throws NullOfferConfirmationException, UnableToSendEmailException, NotFoundException, JsonProcessingException {
+    void test() throws NullOfferConfirmationException, UnableToSendEmailException, JsonProcessingException {
         OfferId offerId = new OfferId("1234");
         Offer offerToCreate = Offer.builder()
                 .offerId(offerId)
                 .title("title")
                 .description("description")
                 .user(User.builder()
-                        .email(Email.builder().value("email@emalinksServiceil.com").build())
+                        .email(Email.builder().value("mohamed.el-barcani@soat.fr").build())
                         .username("username")
                         .build())
                 .address(Address.builder()
