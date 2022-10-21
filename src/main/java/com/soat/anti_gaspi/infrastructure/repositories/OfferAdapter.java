@@ -53,7 +53,7 @@ public class OfferAdapter implements OfferRepository, FindOfferRepository, FindP
 
     @Override
     public Optional<Offer> findOfferByHash(String hash) {
-        var hashEntity = keyRepository.findById(hash);
+        var hashEntity = keyRepository.findByKey_hash(hash);
 
         if (hashEntity.isEmpty()) return Optional.empty();
         return jpaRepository
