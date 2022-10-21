@@ -18,6 +18,6 @@ public class OfferKeyRepository implements OfferKeyFinder {
     @Override
     public Optional<OfferKey> findByOfferId(OfferId id) {
         return repository.findByOfferId(id.value())
-                .map((entity) -> new OfferKey(entity.getKey_hash(), entity.getCreationDate()));
+                .map((entity) -> new OfferKey(entity.getHash(), entity.getCreationDate()));
     }
 }
