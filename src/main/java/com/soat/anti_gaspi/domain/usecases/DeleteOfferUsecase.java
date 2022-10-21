@@ -1,15 +1,15 @@
 package com.soat.anti_gaspi.domain.usecases;
 
-import com.soat.anti_gaspi.domain.FindOfferRepository;
+import com.soat.anti_gaspi.domain.HashOfferFinder;
 import com.soat.anti_gaspi.domain.OfferRepository;
 import com.soat.anti_gaspi.domain.exception.OfferNotFoundException;
 
 public class DeleteOfferUsecase {
 
     private final OfferRepository repository;
-    private final FindOfferRepository offerFinder;
+    private final HashOfferFinder offerFinder;
 
-    public DeleteOfferUsecase(OfferRepository repository, FindOfferRepository offerFinder) {
+    public DeleteOfferUsecase(OfferRepository repository, HashOfferFinder offerFinder) {
         this.repository = repository;
         this.offerFinder = offerFinder;
     }

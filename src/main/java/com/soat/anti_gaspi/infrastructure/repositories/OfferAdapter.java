@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class OfferAdapter implements OfferRepository, FindOfferRepository, FindPublishedOffersRepository {
+public class OfferAdapter implements OfferRepository, FindOfferRepository, FindPublishedOffersRepository, HashOfferFinder {
 
     private final OfferJpaRepository jpaRepository;
     private final ConfirmationKeyOfferJpaRepository keyRepository;
