@@ -22,7 +22,7 @@ public class ConfirmationKeyOfferEntity {
     private String offerId;
 
     @Column(name = "key_hash")
-    private String key_hash;
+    private String hash;
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
