@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
@@ -77,16 +78,16 @@ public class OfferController {
     }
 
     @GetMapping("/validate")
-    public String validateOffer(@RequestParam("hash") String hash) {
+    public ModelAndView validateOffer(@RequestParam("hash") final String hash) {
         final String frontUrl = environment.getProperty("front-url");
-        this.publishOfferUsecase.publish(hash);
-        return "redirect:" + frontUrl + "/validated";
+        publishOfferUsecase.publish(hash);
+        return new ModelAndView("redirect:" + frontUrl + "/validated");
     }
 
     @GetMapping("/delete")
-    public String deleteOffer(@PathVariable("hash") String hash) {
-         final String frontUrl = environment.getProperty("front-url");
+    public ModelAndView deleteOffer(@RequestParam("hash") String hash) {
+        final String frontUrl = environment.getProperty("front-url");
         deleteOfferUsecase.delete(hash);
-        return "redirect:" + frontUrl + "/deleted";
+        return new ModelAndView("redirect:" + frontUrl + "/deleted");
     }
 }
